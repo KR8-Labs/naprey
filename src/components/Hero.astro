@@ -27,7 +27,14 @@ import { hero } from '../data/content';
 
 <style>
   .hero {
-    padding-block: clamp(3.5rem, 2rem + 9vw, 8rem);
+    /* Fill the screen below the sticky nav so the CTA is visible without
+       scrolling. min-height (never fixed height) lets content grow & scroll
+       at 200% zoom / short landscape — WCAG reflow preserved. */
+    min-height: calc(100svh - var(--nav-h));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: var(--space-lg);
     scroll-margin-top: var(--nav-h);
     overflow: hidden;
   }
@@ -50,7 +57,7 @@ import { hero } from '../data/content';
     font-size: clamp(2.8rem, 1rem + 11vw, 6.2rem);
     line-height: 0.95;
     letter-spacing: -0.02em;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
   }
   .hero-name-2 {
     display: block;
@@ -65,7 +72,7 @@ import { hero } from '../data/content';
     line-height: 1.18;
     color: var(--ink);
     max-width: 24ch;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
     padding-left: clamp(2rem, 1rem + 3vw, 3.5rem);
   }
   /* Oversized hanging quotation mark — replaces the old left-stripe border */
@@ -87,13 +94,32 @@ import { hero } from '../data/content';
     line-height: 1.5;
     color: var(--ink-soft);
     max-width: 52ch;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
   }
 
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-sm);
+  }
+
+  /* Short viewports (laptops ~800px tall, landscape phones): compress the
+     stack so the CTA stays on-screen. */
+  @media (max-height: 760px) {
+    .hero-eyebrow { margin-bottom: var(--space-sm); }
+    .hero-name {
+      font-size: clamp(2.4rem, 1rem + 6vw, 4.25rem);
+      margin-bottom: var(--space-sm);
+    }
+    .hero-tagline {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-sm);
+    }
+    .hero-intro {
+      font-size: var(--text-base);
+      line-height: 1.45;
+      margin-bottom: var(--space-md);
+    }
   }
 
   @media (max-width: 520px) {
