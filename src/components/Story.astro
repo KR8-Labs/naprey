@@ -9,7 +9,7 @@ const [first, second, ...rest] = story.paragraphs;
   <div class="container container--narrow">
     <header class="story-head" data-reveal>
       <span class="index">01</span>
-      <span class="kicker">My story</span>
+      <span class="kicker">Background</span>
     </header>
 
     <h2 id="story-heading" class="story-title" data-reveal>{story.heading}</h2>
@@ -34,10 +34,7 @@ const [first, second, ...rest] = story.paragraphs;
     gap: 0.85rem;
     margin-bottom: var(--space-sm);
   }
-  .story-title {
-    font-size: var(--text-2xl);
-    margin-bottom: var(--space-lg);
-  }
+  .story-title { margin-bottom: var(--space-lg); }
 
   .story-body p {
     color: var(--ink-soft);

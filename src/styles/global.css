@@ -24,16 +24,13 @@
   --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-body: 'Hanken Grotesk Variable', system-ui, -apple-system, sans-serif;
 
-  /* Modular type scale (~1.333), fluid where it earns it. Body ≥16px. */
-  --text-xs: 0.78rem;
-  --text-sm: 0.9rem;
-  --text-base: 1.0625rem;                                   /* 17px */
-  --text-md: 1.2rem;
-  --text-lg: clamp(1.3rem, 1.08rem + 1.1vw, 1.65rem);
-  --text-xl: clamp(1.6rem, 1.15rem + 2.2vw, 2.3rem);
-  --text-2xl: clamp(2.1rem, 1.4rem + 3.4vw, 3.4rem);
-  --text-3xl: clamp(2.6rem, 1.5rem + 5.4vw, 4.6rem);
-  --text-display: clamp(3rem, 1.2rem + 9vw, 6rem);          /* hero, ceiling 6rem */
+  /* Type scale — 6 steps. Body ≥16px. Fluid only where the jump earns it. */
+  --text-sm:      0.875rem;
+  --text-base:    1.0625rem;                                 /* 17px */
+  --text-lg:      clamp(1.2rem, 1.05rem + 0.75vw, 1.5rem);
+  --text-xl:      clamp(1.5rem, 1.1rem + 2vw, 2.1rem);
+  --text-2xl:     clamp(2rem, 1.3rem + 3.5vw, 3.2rem);
+  --text-display: clamp(2.8rem, 1rem + 11vw, 6.2rem);       /* hero name only */
 
   /* Spacing — 4pt-based, fluid, varied rhythm */
   --space-2xs: 0.25rem;
@@ -123,9 +120,9 @@ h3, h4 {
   text-wrap: balance;
 }
 h1 { font-size: var(--text-display); }
-h2 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
 h3 { font-size: var(--text-lg); }
-h4 { font-size: var(--text-md); }
+h4 { font-size: var(--text-base); }
 
 p { max-width: 68ch; text-wrap: pretty; }
 p + p { margin-top: 1em; }

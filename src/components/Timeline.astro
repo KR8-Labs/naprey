@@ -20,7 +20,6 @@ import { timeline } from '../data/content';
           <div class="tl-content">
             <h3>{entry.role}</h3>
             <p class="tl-org">{entry.organisation}</p>
-            {entry.description && <p class="tl-desc">{entry.description}</p>}
           </div>
         </li>
       ))}
@@ -30,10 +29,7 @@ import { timeline } from '../data/content';
 
 <style>
   .tl-head { margin-bottom: var(--space-xl); }
-  .tl-head h2 {
-    font-size: var(--text-2xl);
-    margin-top: var(--space-xs);
-  }
+  .tl-head h2 { margin-top: var(--space-xs); }
 
   .timeline {
     list-style: none;
@@ -54,7 +50,7 @@ import { timeline } from '../data/content';
     text-align: right;
     padding-top: 0.15rem;
     font-family: var(--font-display);
-    font-size: var(--text-md);
+    font-size: var(--text-sm);
     color: var(--accent-deep);
     white-space: nowrap;
   }
@@ -86,7 +82,8 @@ import { timeline } from '../data/content';
 
   .tl-content { padding-bottom: var(--space-lg); }
   .tl-content h3 {
-    font-size: var(--text-md);
+    font-size: var(--text-base);
+    font-weight: 600;
     margin-bottom: 0.15rem;
   }
   .tl-org {
