@@ -153,6 +153,11 @@ import { ghl, ghlReady } from '../data/ghl';
   .ghl-form-frame { min-height: 520px; }
   .ghl-calendar-frame { min-height: 700px; }
 
+  @media (max-width: 640px) {
+    .ghl-form-frame { min-height: 400px; }
+    .ghl-calendar-frame { min-height: 500px; }
+  }
+
   /* Placeholder shown when GHL IDs aren't set yet */
   .ghl-placeholder {
     padding: var(--space-md);

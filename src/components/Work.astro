@@ -47,9 +47,15 @@ import { work } from '../data/content';
     transition: box-shadow 0.2s, transform 0.2s;
   }
 
-  .work-card:hover {
-    box-shadow: 0 6px 24px rgb(0 0 0 / 0.09);
-    transform: translateY(-2px);
+  @media (hover: hover) {
+    .work-card:hover {
+      box-shadow: 0 6px 24px rgb(0 0 0 / 0.09);
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .work-card { padding: var(--space-sm); }
   }
 
   @media (prefers-reduced-motion: reduce) {

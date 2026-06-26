@@ -62,11 +62,12 @@ html {
 
 body {
   font-family: var(--font-body);
-  font-size: var(--text-base);
+  font-size: clamp(1rem, 2.5vw + 0.5rem, 1.125rem);
   color: var(--clr-text);
   background-color: var(--clr-bg);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
 }
 
 img, svg { display: block; max-width: 100%; }
@@ -146,7 +147,10 @@ a:hover { color: var(--clr-accent-hover); }
 
 /* ─── Buttons ────────────────────────────────────────────────────────────── */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   padding: 0.75rem 1.75rem;
   border-radius: 4px;
   font-family: var(--font-body);

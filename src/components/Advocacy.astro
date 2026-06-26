@@ -42,7 +42,7 @@ import { advocacy } from '../data/content';
 
   .advocacy-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     gap: var(--space-md);
     list-style: none;
     padding: 0;
@@ -56,6 +56,11 @@ import { advocacy } from '../data/content';
     background: var(--clr-bg);
     border-radius: 8px;
     border: 1px solid var(--clr-border);
+  }
+
+  @media (max-width: 640px) {
+    .advocacy-item { padding: var(--space-sm); }
+    .advocacy-intro { max-width: none; }
   }
 
   .advocacy-accent {

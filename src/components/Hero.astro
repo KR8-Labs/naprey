@@ -84,10 +84,16 @@ import { hero } from '../data/content';
   .hero-quote p {
     font-family: var(--font-display);
     font-style: italic;
-    font-size: var(--text-xl);
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
     color: var(--clr-accent);
     line-height: 1.4;
     max-width: 50ch;
+  }
+
+  @media (max-width: 700px) {
+    .hero-quote p {
+      max-width: none;
+    }
   }
 
   .hero-intro {
