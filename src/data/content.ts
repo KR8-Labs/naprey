@@ -201,6 +201,7 @@ export type RecognitionItem = {
   title: string;
   body: string;
   year?: string;
+  image?: string; /* path in /public, e.g. "/recognition/australia-awards.jpg" */
 };
 
 export const recognition: RecognitionItem[] = [
