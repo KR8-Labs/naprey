@@ -1,0 +1,181 @@
+/* Fonts — self-hosted via @fontsource, no layout shift, no third-party requests */
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource/playfair-display/400-italic.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/600.css';
+
+/* ─── Design tokens ──────────────────────────────────────────────────────── */
+:root {
+  /* Palette — warm & inspiring. All text/bg pairs pass WCAG AA (≥4.5:1). */
+  --clr-bg: #fdfaf6;
+  --clr-bg-alt: #f4ede2;
+  --clr-bg-accent: #fdf0e0;
+  --clr-text: #1c1208;          /* on --clr-bg: ~18:1 */
+  --clr-text-muted: #6b5744;    /* on --clr-bg: ~6:1  */
+  --clr-accent: #8b4513;        /* on --clr-bg: ~6.8:1 */
+  --clr-accent-hover: #6b340f;
+  --clr-border: #e4d5be;
+  --clr-white: #ffffff;
+
+  /* Typography */
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+  /* Fluid type scale */
+  --text-sm: 0.875rem;
+  --text-base: 1.125rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: clamp(1.75rem, 4vw, 2.25rem);
+  --text-3xl: clamp(2rem, 5vw, 3rem);
+  --text-4xl: clamp(2.5rem, 7vw, 4.25rem);
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: clamp(3rem, 8vw, 6rem);
+
+  /* Nav height for scroll-margin-top on sections */
+  --nav-h: 64px;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+/* Respect prefers-reduced-motion throughout */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--clr-text);
+  background-color: var(--clr-bg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+/* ─── Accessibility utilities ────────────────────────────────────────────── */
+
+/* Skip link — visible only on focus */
+.skip-link {
+  position: absolute;
+  top: -999px;
+  left: 1rem;
+  padding: 0.6rem 1.25rem;
+  background: var(--clr-accent);
+  color: var(--clr-white);
+  font-weight: 600;
+  font-size: var(--text-base);
+  border-radius: 0 0 4px 4px;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.15s;
+}
+.skip-link:focus { top: 0; }
+
+/* Keyboard focus ring — visible on all interactive elements */
+:focus-visible {
+  outline: 3px solid var(--clr-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  color: var(--clr-text);
+}
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); margin-bottom: var(--space-md); }
+h3 { font-size: var(--text-xl); margin-bottom: var(--space-xs); }
+
+p { max-width: 68ch; }
+p + p { margin-top: 1.25em; }
+
+a {
+  color: var(--clr-accent);
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+a:hover { color: var(--clr-accent-hover); }
+
+/* ─── Layout primitives ──────────────────────────────────────────────────── */
+.container {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+.section {
+  padding-block: var(--space-xl);
+  scroll-margin-top: var(--nav-h);
+}
+.section--alt { background-color: var(--clr-bg-alt); }
+
+.section-label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--clr-accent);
+  margin-bottom: var(--space-xs);
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  line-height: 1.2;
+}
+.btn-primary {
+  background: var(--clr-accent);
+  color: var(--clr-white);
+  border-color: var(--clr-accent);
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--clr-accent-hover);
+  border-color: var(--clr-accent-hover);
+  color: var(--clr-white);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--clr-accent);
+  border-color: var(--clr-accent);
+}
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  background: var(--clr-accent);
+  color: var(--clr-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}

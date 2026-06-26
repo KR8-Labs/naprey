@@ -1,0 +1,62 @@
+---
+import { recognition } from '../data/content';
+---
+
+<section id="recognition" class="section section--alt" aria-labelledby="recognition-heading">
+  <div class="container">
+    <header>
+      <span class="section-label">Achievements</span>
+      <h2 id="recognition-heading">Recognition &amp; Notable Milestones</h2>
+    </header>
+
+    <ul class="rec-grid" role="list">
+      {recognition.map((item) => (
+        <li class="rec-card">
+          {item.year && (
+            <span class="rec-year" aria-label={`Year: ${item.year}`}>{item.year}</span>
+          )}
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .rec-card {
+    padding: var(--space-md);
+    background: var(--clr-bg);
+    border: 1px solid var(--clr-border);
+    border-top: 4px solid var(--clr-accent);
+    border-radius: 0 0 8px 8px;
+  }
+
+  .rec-year {
+    display: inline-block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--clr-accent);
+    margin-bottom: 0.4rem;
+  }
+
+  h3 {
+    font-size: var(--text-lg);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: var(--text-sm);
+    color: var(--clr-text-muted);
+    line-height: 1.65;
+  }
+</style>

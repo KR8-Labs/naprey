@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+import { site } from '../data/content';
+import { ghl } from '../data/ghl';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#8b4513" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="en_PH" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <title>{title}</title>
+
+    <!-- Favicon placeholder — replace public/favicon.svg with client's icon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body>
+    <!-- Skip to content — first focusable element, required for keyboard/screen reader users -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <slot />
+
+    <!-- GHL Chat Widget — loads only when location ID is configured in .env -->
+    {ghl.locationId && (
+      <script
+        is:inline
+        src="https://widgets.leadconnectorhq.com/loader.js"
+        data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+        data-widget-id={ghl.locationId}
+        async
+        defer
+      />
+    )}
+  </body>
+</html>

@@ -1,0 +1,225 @@
+---
+import { contact } from '../data/content';
+import { ghl, ghlReady } from '../data/ghl';
+---
+
+<section id="contact" class="section section--alt" aria-labelledby="contact-heading">
+  <div class="container">
+    <header>
+      <span class="section-label">Connect</span>
+      <h2 id="contact-heading">{contact.heading}</h2>
+      <p class="contact-intro">{contact.intro}</p>
+    </header>
+
+    <div class="contact-grid">
+
+      <!-- GHL contact form or fallback -->
+      <div class="contact-form-col">
+        <h3>Send a Message</h3>
+        {ghlReady.form ? (
+          <iframe
+            src={ghl.formUrl}
+            title="Contact form — send Naprey a message"
+            class="ghl-frame ghl-form-frame"
+            loading="lazy"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+            aria-label="GoHighLevel contact form"
+          ></iframe>
+        ) : (
+          <div class="ghl-placeholder" role="region" aria-label="Contact form — pending setup">
+            <p class="ghl-placeholder-msg">
+              The contact form will appear here once the GoHighLevel account is connected.
+              In the meantime, reach Naprey directly:
+            </p>
+            <ul class="contact-email-list" role="list">
+              {contact.emails.map((e) => (
+                <li>
+                  <span class="contact-email-label">{e.label}</span>
+                  <a href={`mailto:${e.address}`} class="contact-email-link">
+                    {e.address}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <!-- GHL calendar or fallback -->
+      <div class="contact-calendar-col">
+        <h3>Book a Consultation</h3>
+        {ghlReady.calendar ? (
+          <iframe
+            src={ghl.calendarUrl}
+            title="Booking calendar — schedule a consultation with Naprey Almario"
+            class="ghl-frame ghl-calendar-frame"
+            loading="lazy"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+            aria-label="GoHighLevel booking calendar"
+          ></iframe>
+        ) : (
+          <div class="ghl-placeholder" role="region" aria-label="Booking calendar — pending setup">
+            <p class="ghl-placeholder-msg">
+              Online booking will be available here once the GoHighLevel calendar is connected.
+              To schedule a call or meeting, email Naprey directly.
+            </p>
+          </div>
+        )}
+      </div>
+
+    </div>
+
+    <!-- Always-visible contact details -->
+    <div class="contact-details" aria-label="Contact details">
+      <dl class="contact-dl">
+        <div class="contact-dl-item">
+          <dt>Phone</dt>
+          <dd>
+            <a href={`tel:${contact.phone.tel}`}>{contact.phone.display}</a>
+          </dd>
+        </div>
+
+        <div class="contact-dl-item">
+          <dt>Email</dt>
+          <dd>
+            <ul class="contact-email-inline" role="list">
+              {contact.emails.map((e) => (
+                <li><a href={`mailto:${e.address}`}>{e.address}</a></li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+
+        <div class="contact-dl-item">
+          <dt>Location</dt>
+          <dd>{contact.location}</dd>
+        </div>
+
+        <div class="contact-dl-item">
+          <dt>Social</dt>
+          <dd>
+            <ul class="social-list" role="list">
+              {contact.social.map((s) => (
+                <li>
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${s.platform}: ${s.label} (opens in new tab)`}
+                  >
+                    {s.platform} — {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .contact-intro {
+    font-size: var(--text-lg);
+    color: var(--clr-text-muted);
+    margin-bottom: var(--space-lg);
+    max-width: 60ch;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  @media (max-width: 700px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+
+  h3 {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* GHL iframes */
+  .ghl-frame {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    display: block;
+  }
+  .ghl-form-frame { min-height: 520px; }
+  .ghl-calendar-frame { min-height: 700px; }
+
+  /* Placeholder shown when GHL IDs aren't set yet */
+  .ghl-placeholder {
+    padding: var(--space-md);
+    background: var(--clr-bg);
+    border: 2px dashed var(--clr-border);
+    border-radius: 8px;
+    min-height: 200px;
+  }
+
+  .ghl-placeholder-msg {
+    color: var(--clr-text-muted);
+    margin-bottom: var(--space-sm);
+  }
+
+  .contact-email-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-email-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--clr-text-muted);
+  }
+
+  .contact-email-link {
+    font-size: var(--text-base);
+  }
+
+  /* Always-visible contact details */
+  .contact-details {
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--clr-border);
+  }
+
+  .contact-dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .contact-dl-item dt {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--clr-text-muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .contact-dl-item dd {
+    color: var(--clr-text);
+    font-size: var(--text-base);
+  }
+
+  .contact-email-inline,
+  .social-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+</style>

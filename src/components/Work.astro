@@ -1,0 +1,94 @@
+---
+import { work } from '../data/content';
+---
+
+<section id="work" class="section" aria-labelledby="work-heading">
+  <div class="container">
+    <header>
+      <span class="section-label">What I Do</span>
+      <h2 id="work-heading">Services &amp; Expertise</h2>
+    </header>
+
+    <ul class="work-grid" role="list">
+      {work.map((item) => (
+        <li class="work-card">
+          {item.highlight && (
+            <span class="work-badge" aria-label={`Highlight: ${item.highlight}`}>
+              {item.highlight}
+            </span>
+          )}
+          <h3>{item.name}</h3>
+          <p class="work-role">{item.role}</p>
+          <p class="work-period">{item.period}</p>
+          <p class="work-desc">{item.description}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .work-card {
+    position: relative;
+    padding: var(--space-md);
+    background: var(--clr-white);
+    border: 1px solid var(--clr-border);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.04);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .work-card:hover {
+    box-shadow: 0 6px 24px rgb(0 0 0 / 0.09);
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .work-card { transition: none; transform: none !important; }
+  }
+
+  .work-badge {
+    display: inline-block;
+    margin-bottom: var(--space-sm);
+    padding: 0.25rem 0.75rem;
+    background: var(--clr-bg-accent);
+    color: var(--clr-accent);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: 100px;
+    border: 1px solid var(--clr-border);
+  }
+
+  h3 {
+    margin-bottom: 0.25rem;
+  }
+
+  .work-role {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--clr-accent);
+    margin-bottom: 0.25rem;
+    max-width: none;
+  }
+
+  .work-period {
+    font-size: var(--text-sm);
+    color: var(--clr-text-muted);
+    margin-bottom: var(--space-sm);
+    max-width: none;
+  }
+
+  .work-desc {
+    font-size: var(--text-base);
+    color: var(--clr-text-muted);
+  }
+</style>

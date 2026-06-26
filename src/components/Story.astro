@@ -1,0 +1,68 @@
+---
+import { story } from '../data/content';
+---
+
+<section id="story" class="section section--alt" aria-labelledby="story-heading">
+  <div class="container story-grid">
+    <header class="story-header">
+      <span class="section-label">About</span>
+      <h2 id="story-heading">{story.heading}</h2>
+    </header>
+
+    <div class="story-body">
+      {story.paragraphs.map((para) => <p>{para}</p>)}
+
+      <blockquote class="pull-quote" aria-label="Key quote from Naprey">
+        <p>"{story.pullQuote}"</p>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<style>
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .story-grid { grid-template-columns: 1fr; }
+  }
+
+  .story-header {
+    position: sticky;
+    top: calc(var(--nav-h) + 2rem);
+  }
+
+  .story-header h2 {
+    margin-bottom: 0;
+  }
+
+  .story-body p {
+    color: var(--clr-text-muted);
+    font-size: var(--text-base);
+  }
+  .story-body p:first-child {
+    font-size: var(--text-lg);
+    color: var(--clr-text);
+  }
+
+  .pull-quote {
+    margin-top: var(--space-md);
+    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+    border-left: 5px solid var(--clr-accent);
+    background: var(--clr-bg-accent);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .pull-quote p {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--text-xl);
+    line-height: 1.5;
+    color: var(--clr-accent);
+    max-width: 55ch;
+  }
+</style>

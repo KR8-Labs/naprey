@@ -1,0 +1,133 @@
+---
+import { hero } from '../data/content';
+---
+
+<section class="hero" aria-labelledby="hero-name">
+  <div class="hero-inner container">
+    <div class="hero-text">
+      <p class="hero-label">Disability Champion · Entrepreneur</p>
+      <h1 id="hero-name">{hero.name}</h1>
+      <blockquote class="hero-quote">
+        <p>"{hero.tagline}"</p>
+      </blockquote>
+      <p class="hero-intro">{hero.intro}</p>
+      <div class="hero-ctas">
+        <a href={hero.cta.href} class="btn btn-primary">{hero.cta.label}</a>
+        <a href={hero.secondaryCta.href} class="btn btn-outline">{hero.secondaryCta.label}</a>
+      </div>
+    </div>
+
+    <!--
+      Photo placeholder — replace with:
+      <Image src={import('../assets/headshot.jpg')} alt="Naprey Almario smiling" />
+      once the client provides a photo.
+    -->
+    <div
+      class="hero-photo-placeholder"
+      role="img"
+      aria-label="Photo of Naprey Almario — placeholder, to be replaced with client photo"
+    >
+      <svg class="placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <p class="placeholder-label">Client photo coming soon</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--clr-bg) 0%, var(--clr-bg-alt) 100%);
+    padding-block: clamp(4rem, 10vw, 7rem);
+    scroll-margin-top: var(--nav-h);
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  @media (max-width: 700px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .hero-photo-placeholder {
+      margin-inline: auto;
+    }
+  }
+
+  .hero-label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clr-accent);
+    margin-bottom: 0.75rem;
+    max-width: none;
+  }
+
+  h1 {
+    margin-bottom: var(--space-sm);
+    color: var(--clr-text);
+  }
+
+  .hero-quote {
+    border-left: 4px solid var(--clr-accent);
+    padding-left: 1.25rem;
+    margin-block: var(--space-sm);
+  }
+  .hero-quote p {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--text-xl);
+    color: var(--clr-accent);
+    line-height: 1.4;
+    max-width: 50ch;
+  }
+
+  .hero-intro {
+    color: var(--clr-text-muted);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-md);
+    max-width: 54ch;
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  /* Photo placeholder */
+  .hero-photo-placeholder {
+    width: clamp(200px, 30vw, 320px);
+    aspect-ratio: 3 / 4;
+    border-radius: 8px;
+    border: 2px dashed var(--clr-border);
+    background: var(--clr-bg-accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--clr-text-muted);
+    flex-shrink: 0;
+  }
+
+  .placeholder-icon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--clr-border);
+  }
+
+  .placeholder-label {
+    font-size: var(--text-sm);
+    color: var(--clr-text-muted);
+    text-align: center;
+    max-width: 12ch;
+  }
+</style>
