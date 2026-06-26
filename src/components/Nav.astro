@@ -53,11 +53,34 @@ import { nav, hero } from '../data/content';
 
   .nav-links {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.25rem 0.25rem;
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+
+  /* Mobile: scroll nav links horizontally instead of wrapping */
+  @media (max-width: 640px) {
+    .nav-inner {
+      flex-wrap: nowrap;
+      padding-block: 0.6rem;
+    }
+
+    nav {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      /* fade edge hint */
+      -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+      mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    }
+    nav::-webkit-scrollbar { display: none; }
+
+    .nav-link {
+      padding: 0.3rem 0.6rem;
+      white-space: nowrap;
+    }
   }
 
   .nav-link {

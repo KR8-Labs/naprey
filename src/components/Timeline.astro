@@ -44,27 +44,46 @@ import { timeline } from '../data/content';
     display: grid;
     grid-template-columns: 10rem 2rem 1fr;
     gap: 0 1.25rem;
-    align-items: start;
+    /* stretch makes the connector column as tall as the content column
+       so the flex-1 line inside fills the full gap between dots */
+    align-items: stretch;
   }
 
   @media (max-width: 600px) {
+    /* Switch to a border-left approach on mobile — simpler and reliable */
+    .timeline {
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--clr-border);
+    }
+
     .tl-item {
       grid-template-columns: 1fr;
-      padding-left: 2.5rem;
       position: relative;
     }
-    .tl-period { order: 2; margin-bottom: 0.25rem; }
-    .tl-connector {
+
+    /* Dot drawn via ::before on each item, aligned to the border-left */
+    .tl-item::before {
+      content: '';
       position: absolute;
-      left: 0;
-      top: 0;
-      flex-direction: column;
-      height: 100%;
-      order: 1;
-      display: flex;
-      align-items: center;
+      left: calc(-1.5rem - 5px);
+      top: 0.45rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--clr-accent);
+      border: 2px solid var(--clr-bg);
+      box-shadow: 0 0 0 2px var(--clr-accent);
     }
-    .tl-content { order: 3; }
+
+    /* Hide the dedicated connector column — the border-left handles the line */
+    .tl-connector { display: none; }
+
+    .tl-period {
+      text-align: left;
+      white-space: normal;
+      padding-top: 0;
+      margin-bottom: 0.15rem;
+    }
   }
 
   .tl-period {

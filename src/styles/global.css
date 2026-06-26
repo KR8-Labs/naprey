@@ -124,6 +124,10 @@ a:hover { color: var(--clr-accent-hover); }
   padding-inline: var(--space-md);
 }
 
+@media (max-width: 640px) {
+  .container { padding-inline: 1rem; }
+}
+
 .section {
   padding-block: var(--space-xl);
   scroll-margin-top: var(--nav-h);
