@@ -61,7 +61,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   .rec-section {
     overflow: hidden;
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100dvh - var(--nav-h));
     display: flex;
     flex-direction: column;
     justify-content: center;
