@@ -2,7 +2,7 @@
 import { recognition } from '../data/content';
 ---
 
-<section id="recognition" class="section section--alt" aria-labelledby="recognition-heading">
+<section id="recognition" class="section section--alt rec-section" aria-labelledby="recognition-heading">
   <div class="container">
     <header class="rec-head" data-reveal>
       <span class="kicker">Recognition</span>
@@ -56,12 +56,13 @@ import { recognition } from '../data/content';
 </section>
 
 <style>
+  .rec-section { overflow: hidden; }
   .rec-head { margin-bottom: var(--space-xl); }
   .rec-head h2 { margin-top: var(--space-xs); }
 
   /* Extra padding so rotated behind-cards don't get clipped */
   .deck-scene {
-    width: min(440px, 100%);
+    width: min(760px, 100%);
     margin: 0 auto;
     padding: 28px 22px 0;
   }
@@ -190,7 +191,7 @@ import { recognition } from '../data/content';
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: var(--space-md);
+    margin-top: var(--space-xl);
     font-size: var(--text-sm);
     color: var(--ink-soft);
   }
@@ -200,9 +201,19 @@ import { recognition } from '../data/content';
     font-variant-numeric: tabular-nums;
   }
 
+  @media (min-width: 860px) {
+    .deck-scene { padding: 36px 30px 0; }
+    .card-photo { height: clamp(260px, 24vw, 360px); }
+    .card-num { font-size: 8rem; }
+    .card-content { padding: var(--space-lg); }
+    .card-content h3 { font-size: var(--text-lg); margin-bottom: 0.6rem; }
+    .card-content p { font-size: var(--text-base); }
+  }
+
   @media (max-width: 520px) {
     .deck-scene { padding: 20px 14px 0; }
-    .card-photo { height: 175px; }
+    .card-photo { height: 240px; }
+    .card-content { padding: var(--space-lg) var(--space-md); }
     .card-num { font-size: 4.5rem; }
   }
 </style>

@@ -3,7 +3,7 @@ import { contact } from '../data/content';
 import { ghl, ghlReady } from '../data/ghl';
 ---
 
-<section id="contact" class="section" aria-labelledby="contact-heading">
+<section id="contact" class="section section--alt" aria-labelledby="contact-heading">
   <div class="container">
     <header class="contact-head" data-reveal>
       <span class="kicker">Connect</span>
@@ -65,46 +65,6 @@ import { ghl, ghlReady } from '../data/ghl';
       </div>
     </div>
 
-    <!-- Always-visible contact details -->
-    <div class="contact-details" aria-label="Contact details" data-reveal>
-      <dl class="contact-dl">
-        <div class="contact-dl-item">
-          <dt>Phone</dt>
-          <dd><a href={`tel:${contact.phone.tel}`}>{contact.phone.display}</a></dd>
-        </div>
-        <div class="contact-dl-item">
-          <dt>Email</dt>
-          <dd>
-            <ul class="contact-inline" role="list">
-              {contact.emails.map((e) => (
-                <li><a href={`mailto:${e.address}`}>{e.address}</a></li>
-              ))}
-            </ul>
-          </dd>
-        </div>
-        <div class="contact-dl-item">
-          <dt>Location</dt>
-          <dd>{contact.location}</dd>
-        </div>
-        <div class="contact-dl-item">
-          <dt>Social</dt>
-          <dd>
-            <ul class="contact-inline" role="list">
-              {contact.social.map((s) => (
-                <li>
-                  <a
-                    href={s.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${s.platform}: ${s.label} (opens in new tab)`}
-                  >{s.platform} — {s.label}</a>
-                </li>
-              ))}
-            </ul>
-          </dd>
-        </div>
-      </dl>
-    </div>
   </div>
 </section>
 
@@ -173,33 +133,4 @@ import { ghl, ghlReady } from '../data/ghl';
     color: var(--ink-soft);
   }
 
-  .contact-details {
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--line);
-  }
-  .contact-dl {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
-    gap: var(--space-md);
-  }
-  .contact-dl-item dt {
-    font-size: var(--text-sm);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 0.4rem;
-  }
-  .contact-dl-item dd {
-    color: var(--ink);
-    font-size: var(--text-base);
-  }
-  .contact-inline {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
 </style>

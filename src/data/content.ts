@@ -15,7 +15,6 @@ export const nav = {
     { label: "Advocacy", href: "#advocacy" },
     { label: "Timeline", href: "#timeline" },
     { label: "Recognition", href: "#recognition" },
-    { label: "Contact", href: "#contact" },
   ],
 };
 
@@ -23,9 +22,9 @@ export const hero = {
   name: "Naprey Almario",
   title: "Disability Champion · Entrepreneur",
   location: "Davao City, Philippines",
-  tagline: "Not limited but limitless. Not stuck but soaring.",
+  tagline: "I lost the ability to walk, but never the courage to move forward.",
   intro:
-    "Polio survivor. Wheelchair user. Advocate, educator, and entrepreneur — proving every day that disability is not inability, and helping others travel, study, speak, and lead.",
+    "Polio survivor. Wheelchair user. Advocate, educator, and entrepreneur based in Davao City, Philippines — proving every day that disability is not inability, and helping others travel, study, speak, and lead.",
   cta: { label: "Work with me", href: "#contact" },
   secondaryCta: { label: "Read my story", href: "#story" },
 };
@@ -63,11 +62,12 @@ export const ctaBanner = {
 export const story = {
   heading: "My Story",
   paragraphs: [
-    "At eight years old, polio paralyzed both my lower extremities. For nearly a year I was in hospitals, the active kid I once was replaced by someone who would never walk again. I questioned everything. But I decided the hard reality didn't have to define me.",
-    "The answer was no. I graduated with a BS in IT, gave the graduation speech, became a college instructor, earned a master's degree, and won an Australia Awards scholarship to Curtin University. I founded Behind the Rolling Chair to champion accessibility, took a seat at the Regional Development Council XI, launched an accessible-tourism travel agency, and opened a top-ranked Cebuana Lhuillier center where I deliberately hire people with disabilities. Purpose found.",
+    "At eight years old, polio paralyzed both my lower extremities. For nearly a year, I was in hospitals. The active kid I once was was replaced by someone who would never walk again. I questioned everything. But eventually, I made a decision: my disability would shape my life, but it would not define my future.",
+    "That decision changed the direction of my life. I pursued a BS in IT, delivered the graduation speech, became a college instructor, earned a master's degree, and received an Australia Awards Scholarship to Curtin University. Along the way, I realized my purpose wasn't just to succeed—it was to create opportunities for others.",
+    "I founded Behind the Rolling Chair to champion accessibility, served on the Regional Development Council XI, launched an accessible-tourism travel agency, and opened a top-performing Cebuana Lhuillier branch where I intentionally hire people with disabilities. Today, everything I do is driven by one belief: disability should never limit someone's opportunity to live, work, or thrive.",
   ],
   pullQuote:
-    "My legs may not be able to walk, but I have hands that can reach out and make a difference, coupled with a determined heart.",
+    "Purpose is greater than circumstance.",
 };
 
 export type WorkItem = {
@@ -245,7 +245,7 @@ export const recognition: RecognitionItem[] = [
 export const contact = {
   heading: "Get in Touch",
   intro:
-    "Whether you want to inquire about travel, study abroad, speaking engagements, or disability advocacy — Naprey would love to hear from you.",
+    "Whether you want to inquire about travel, study abroad, speaking engagements, or disability advocacy — I would love to hear from you.",
   emails: [
     { label: "General enquiries", address: "almario1988@gmail.com" },
     { label: "Advocacy / Behind the Rolling Chair", address: "behindrollingchair@gmail.com" },
