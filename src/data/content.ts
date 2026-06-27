@@ -219,6 +219,7 @@ export const recognition: RecognitionItem[] = [
     title: "Air Asia Philippines Brand Ambassador",
     body: "National airline commercial promoting accessible and inclusive travel.",
     year: "2018–2019",
+    image: 'milestones/airasia.webp',
   },
   {
     title: "Cebuana Lhuillier Happiest Pinoy Ambassador",
