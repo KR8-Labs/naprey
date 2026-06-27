@@ -4,7 +4,7 @@ export const site = {
   title: "Naprey Almario · Disability Champion · Entrepreneur",
   description:
     "Naprey Almario is a PWD advocate, entrepreneur, and educator from Davao City, Philippines, turning disability into ability and championing accessibility and inclusion.",
-  url: "https://napreyalmario.com",
+  url: "https://napreyalmario.online",
   locale: "en_PH",
 };
 

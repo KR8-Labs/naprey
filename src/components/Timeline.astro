@@ -5,7 +5,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
 <section id="timeline" class="section tl-section" aria-labelledby="timeline-heading">
   <div class="tl-bg" aria-hidden="true">
-    <img src={`${base}beach.webp`} alt="" />
+    <img src={`${base}beach.webp`} alt="" loading="lazy" />
   </div>
   <div class="container">
     <header class="tl-head" data-reveal>
@@ -32,26 +32,32 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 </section>
 
 <style>
-  .tl-section { position: relative; overflow: hidden; }
+  .tl-section {
+    position: relative;
+    overflow: hidden;
+  }
 
+  /* Full-section backdrop — mirrors the Recognition section's .rec-bg:
+     inset: 0 + cover, anchored to the right, faded out toward the left. */
   .tl-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    overflow: hidden;
   }
+  /* Image flush-right, fills full section height. Mask is on the image itself
+     so the gradient maps to the IMAGE's width — fading its own left edge. */
   .tl-bg img {
     position: absolute;
     top: 0;
     right: 0;
     height: 100%;
-    width: 52%;
+    width: auto;
+    max-width: none;
     object-fit: cover;
-    object-position: center center;
-    opacity: 0.22;
-    mask-image: linear-gradient(to right, transparent 0%, black 30%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%);
+    opacity: 0.28;
+    mask-image: linear-gradient(to right, transparent 0%, black 55%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 55%);
   }
 
   .tl-section > .container {
@@ -130,8 +136,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     color: var(--ink-soft);
   }
 
-  /* Mobile: a single spine on the left with dots; period above each entry */
+  /* Mobile: single left spine */
   @media (max-width: 640px) {
+    .tl-bg { display: none; }
+
     .timeline {
       padding-left: 1.5rem;
       border-left: 2px solid var(--line);
