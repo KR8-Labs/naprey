@@ -1,9 +1,9 @@
 // All site copy lives here. Edit this file to update text without touching markup.
 
 export const site = {
-  title: "Naprey Almario — Disability Champion · Entrepreneur",
+  title: "Naprey Almario · Disability Champion · Entrepreneur",
   description:
-    "Naprey Almario is a PWD advocate, entrepreneur, and educator from Davao City, Philippines — turning disability into ability and championing accessibility and inclusion.",
+    "Naprey Almario is a PWD advocate, entrepreneur, and educator from Davao City, Philippines, turning disability into ability and championing accessibility and inclusion.",
   url: "https://napreyalmario.com",
   locale: "en_PH",
 };
@@ -24,7 +24,7 @@ export const hero = {
   location: "Davao City, Philippines",
   tagline: "I lost the ability to walk, but never the courage to move forward.",
   intro:
-    "Polio survivor. Wheelchair user. Advocate, educator, and entrepreneur based in Davao City, Philippines — proving every day that disability is not inability, and helping others travel, study, speak, and lead.",
+    "Polio survivor. Advocate, educator, and entrepreneur based in Davao City, Philippines, proving every day that disability is not inability, and helping others travel, study, speak, and lead.",
   cta: { label: "Work with me", href: "#contact" },
   secondaryCta: { label: "Read my story", href: "#story" },
 };
@@ -34,11 +34,11 @@ export const hero = {
 export const proof = {
   lead: "Recognized nationally & internationally",
   items: [
-    "Australia Awards Scholar — Curtin University",
-    "RDC XI Representative — PWD & Senior Citizen sector",
+    "Australia Awards Scholar, Curtin University",
+    "RDC XI Representative, PWD & Senior Citizen sector",
     "Pinoy Big Brother Season 4 Housemate",
     "Air Asia Philippines Brand Ambassador",
-    "Top 1 Cebuana Lhuillier — Davao Region",
+    "Top 1 Cebuana Lhuillier, Davao Region",
   ],
 };
 
@@ -47,7 +47,7 @@ export const services = {
   kicker: "Work with me",
   heading: "How we can work together",
   intro:
-    "Accessible travel, studying and working abroad, speaking and training, and inclusive business — practical ways I help people and organizations move forward.",
+    "Accessible travel, studying and working abroad, speaking and training, and inclusive business. Practical ways I help people and organizations move forward.",
   cta: { label: "Start a conversation", href: "#contact" },
 };
 
@@ -55,7 +55,7 @@ export const services = {
 export const ctaBanner = {
   heading: "Let's build something inclusive together.",
   body:
-    "Travel, education abroad, a speaking engagement, or an advocacy partnership — tell me what you have in mind.",
+    "Travel, education abroad, a speaking engagement, or an advocacy partnership. Tell me what you have in mind.",
   cta: { label: "Get in touch", href: "#contact" },
 };
 
@@ -63,7 +63,7 @@ export const story = {
   heading: "My Story",
   paragraphs: [
     "At eight years old, polio paralyzed both my lower extremities. For nearly a year, I was in hospitals. The active kid I once was was replaced by someone who would never walk again. I questioned everything. But eventually, I made a decision: my disability would shape my life, but it would not define my future.",
-    "That decision changed the direction of my life. I pursued a BS in IT, delivered the graduation speech, became a college instructor, earned a master's degree, and received an Australia Awards Scholarship to Curtin University. Along the way, I realized my purpose wasn't just to succeed—it was to create opportunities for others.",
+    "That decision changed the direction of my life. I pursued a BS in IT, delivered the graduation speech, became a college instructor, earned a master's degree, and received an Australia Awards Scholarship to Curtin University. Along the way, I realized my purpose wasn't just to succeed. It was to create opportunities for others.",
     "I founded Behind the Rolling Chair to champion accessibility, served on the Regional Development Council XI, launched an accessible-tourism travel agency, and opened a top-performing Cebuana Lhuillier branch where I intentionally hire people with disabilities. Today, everything I do is driven by one belief: disability should never limit someone's opportunity to live, work, or thrive.",
   ],
   pullQuote:
@@ -99,7 +99,7 @@ export const work: WorkItem[] = [
     role: "Owner & Operator",
     period: "2020 – Present",
     description:
-      "Opened during the pandemic and now top-ranked in the Davao Region — with a deliberate policy of employing people with disabilities.",
+      "Opened during the pandemic and now top-ranked in the Davao Region, with a deliberate policy of employing people with disabilities.",
     highlight: "Top 1 in Davao Region, 2025 Q1",
   },
   {
@@ -134,7 +134,7 @@ export const advocacy: AdvocacyItem[] = [
       "Ensures PWD and Senior Citizen sectors are represented in Region XI's development plans and policy.",
   },
   {
-    name: "GEDSI Convenor — Australia Alumni Communities Philippines",
+    name: "GEDSI Convenor, Australia Alumni Communities Philippines",
     role: "Lead Convenor",
     since: "2022",
     description:
@@ -231,7 +231,7 @@ export const recognition: RecognitionItem[] = [
   },
   {
     title: "The Good Story Award",
-    body: "Our Better World, Singapore — turning adversity into purpose.",
+    body: "Our Better World, Singapore. Turning adversity into purpose.",
     year: "2014",
     image: 'milestones/thegoodstoryaward.webp',
   },
@@ -242,7 +242,7 @@ export const recognition: RecognitionItem[] = [
     image: 'milestones/bloggeraward.webp',
   },
   {
-    title: "Rappler Do More Awards — Luminary Finalist",
+    title: "Rappler Do More Awards, Luminary Finalist",
     body: "Recognised by Rappler as a community changemaker.",
     year: "2013",
     image: 'milestones/rappler.webp',
@@ -252,7 +252,7 @@ export const recognition: RecognitionItem[] = [
 export const contact = {
   heading: "Get in Touch",
   intro:
-    "Whether you want to inquire about travel, study abroad, speaking engagements, or disability advocacy — I would love to hear from you.",
+    "Whether you want to inquire about travel, study abroad, speaking engagements, or disability advocacy, I would love to hear from you.",
   emails: [
     { label: "General enquiries", address: "almario1988@gmail.com" },
     { label: "Advocacy / Behind the Rolling Chair", address: "behindrollingchair@gmail.com" },
