@@ -11,67 +11,40 @@ import { ghl, ghlReady } from '../data/ghl';
       <p class="contact-intro">{contact.intro}</p>
     </header>
 
-    <div class="contact-grid">
-      <!-- GHL contact form or fallback -->
-      <div class="contact-col" data-reveal>
-        <h3>Send a message</h3>
-        {ghlReady.form ? (
-          <iframe
-            src={ghl.formUrl}
-            title="Contact form — send Naprey a message"
-            class="ghl-frame ghl-form-frame"
-            loading="lazy"
-            sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
-            aria-label="GoHighLevel contact form"
-          ></iframe>
-        ) : (
-          <div class="ghl-placeholder" role="region" aria-label="Contact form — pending setup">
-            <p class="ghl-placeholder-msg">
-              The contact form will appear here once the GoHighLevel account is connected.
-              In the meantime, reach Naprey directly:
-            </p>
-            <ul class="contact-email-list" role="list">
-              {contact.emails.map((e) => (
-                <li>
-                  <span class="contact-email-label">{e.label}</span>
-                  <a href={`mailto:${e.address}`} class="contact-email-link">{e.address}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-
-      <!-- GHL calendar or fallback -->
-      <div class="contact-col" data-reveal>
-        <h3>Book a consultation</h3>
-        {ghlReady.calendar ? (
-          <iframe
-            src={ghl.calendarUrl}
-            title="Booking calendar — schedule a consultation with Naprey Almario"
-            class="ghl-frame ghl-calendar-frame"
-            loading="lazy"
-            sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
-            aria-label="GoHighLevel booking calendar"
-          ></iframe>
-        ) : (
-          <div class="ghl-placeholder" role="region" aria-label="Booking calendar — pending setup">
-            <p class="ghl-placeholder-msg">
-              Online booking will be available here once the GoHighLevel calendar is connected.
-              To schedule a call or meeting, email Naprey directly.
-            </p>
-          </div>
-        )}
-      </div>
+    <div class="contact-form" data-reveal>
+      {ghlReady.form ? (
+        <iframe
+          src={ghl.formUrl}
+          title="Contact form — send Naprey a message"
+          class="ghl-frame ghl-form-frame"
+          loading="lazy"
+          sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+          aria-label="GoHighLevel contact form"
+        ></iframe>
+      ) : (
+        <div class="ghl-placeholder" role="region" aria-label="Contact form — pending setup">
+          <p class="ghl-placeholder-msg">
+            The contact form will appear here once the GoHighLevel account is connected.
+            In the meantime, reach Naprey directly:
+          </p>
+          <ul class="contact-email-list" role="list">
+            {contact.emails.map((e) => (
+              <li>
+                <span class="contact-email-label">{e.label}</span>
+                <a href={`mailto:${e.address}`} class="contact-email-link">{e.address}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
 
   </div>
 </section>
 
 <script>
-  // Auto-resize GHL iframe when it broadcasts its height via postMessage
+  // Auto-resize GHL form iframe when it broadcasts its height via postMessage
   const formFrame = document.querySelector<HTMLIFrameElement>('.ghl-form-frame');
-  const calFrame  = document.querySelector<HTMLIFrameElement>('.ghl-calendar-frame');
 
   window.addEventListener('message', (e) => {
     if (e.origin !== 'https://api.leadconnectorhq.com') return;
@@ -79,7 +52,6 @@ import { ghl, ghlReady } from '../data/ghl';
     const height = data?.height ?? data?.['iframe-height'];
     if (!height || typeof height !== 'number') return;
     if (e.source === formFrame?.contentWindow) formFrame.style.height = `${height}px`;
-    if (e.source === calFrame?.contentWindow)  calFrame.style.height  = `${height}px`;
   });
 </script>
 
@@ -92,23 +64,9 @@ import { ghl, ghlReady } from '../data/ghl';
     line-height: 1.5;
   }
 
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
-    margin-bottom: var(--space-xl);
-  }
-  .contact-col h3 {
-    font-size: var(--text-base);
-    font-weight: 600;
-    margin-bottom: var(--space-sm);
-  }
+  .contact-form { margin-bottom: var(--space-xl); }
 
-  @media (max-width: 700px) {
-    .contact-grid { grid-template-columns: 1fr; }
-  }
-
-  /* GHL iframes */
+  /* GHL iframe */
   .ghl-frame {
     width: 100%;
     border: none;
@@ -116,10 +74,8 @@ import { ghl, ghlReady } from '../data/ghl';
     display: block;
   }
   .ghl-form-frame { min-height: 750px; }
-  .ghl-calendar-frame { min-height: 700px; }
   @media (max-width: 640px) {
-    .ghl-form-frame { min-height: 400px; }
-    .ghl-calendar-frame { min-height: 500px; }
+    .ghl-form-frame { min-height: 680px; }
   }
 
   .ghl-placeholder {
