@@ -10,15 +10,34 @@ import { proof } from '../data/content';
     </ul>
   </div>
 
-  <div class="proof-ticker" aria-hidden="true">
-    <div class="proof-track">
-      {[...proof.items, ...proof.items].map((item) => (
-        <Fragment>
-          <span class="proof-item">{item}</span>
-          <span class="proof-sep">·</span>
-        </Fragment>
-      ))}
+  <div class="proof-ticker-wrap">
+    <div class="proof-ticker" aria-hidden="true">
+      <div class="proof-track">
+        {[...proof.items, ...proof.items].map((item) => (
+          <Fragment>
+            <span class="proof-item">{item}</span>
+            <span class="proof-sep">·</span>
+          </Fragment>
+        ))}
+      </div>
     </div>
+
+    <button
+      id="ticker-pause"
+      class="ticker-pause-btn"
+      aria-label="Pause scrolling ticker"
+      aria-pressed="false"
+      type="button"
+    >
+      <!-- pause icon — swapped to play icon via JS when paused -->
+      <svg id="ticker-icon-pause" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+        <rect x="2" y="1" width="4" height="12" rx="1"/>
+        <rect x="8" y="1" width="4" height="12" rx="1"/>
+      </svg>
+      <svg id="ticker-icon-play" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true" style="display:none">
+        <path d="M3 1.5l9 5.5-9 5.5V1.5z"/>
+      </svg>
+    </button>
   </div>
 </section>
 
@@ -43,9 +62,13 @@ import { proof } from '../data/content';
     to   { transform: translateX(-50%); }
   }
 
+  .proof-ticker-wrap {
+    position: relative;
+    margin-top: var(--space-md);
+  }
+
   .proof-ticker {
     width: 100%;
-    margin-top: var(--space-md);
     overflow: hidden;
     mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
@@ -74,31 +97,103 @@ import { proof } from '../data/content';
     font-size: var(--text-lg);
     line-height: 1;
   }
+
+  /* Pause button — sits at the right edge of the ticker row */
+  .ticker-pause-btn {
+    position: absolute;
+    top: 50%;
+    right: clamp(1.1rem, 0.5rem + 3vw, 3rem);
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line);
+    background: var(--paper-2);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    z-index: 1;
+  }
+  .ticker-pause-btn:hover,
+  .ticker-pause-btn:focus-visible {
+    color: var(--accent-deep);
+    border-color: var(--accent-deep);
+    background: var(--paper);
+  }
+  /* Hide button when motion is reduced — the ticker isn't animating anyway */
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-pause-btn { display: none; }
+  }
 </style>
 
 <script>
-  const ticker = document.querySelector('.proof-ticker') as HTMLElement | null;
-  const track  = document.querySelector('.proof-track')  as HTMLElement | null;
+  const ticker   = document.querySelector('.proof-ticker') as HTMLElement | null;
+  const track    = document.querySelector('.proof-track')  as HTMLElement | null;
+  const pauseBtn = document.getElementById('ticker-pause') as HTMLButtonElement | null;
+  const iconPause = document.getElementById('ticker-icon-pause') as SVGElement | null;
+  const iconPlay  = document.getElementById('ticker-icon-play')  as SVGElement | null;
 
   if (ticker && track && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let userPaused = false;
     let rafId = 0;
+
+    function getAnim() { return track!.getAnimations()[0] ?? null; }
 
     function animateRate(to: number, duration: number) {
       cancelAnimationFrame(rafId);
-      const anim = track!.getAnimations()[0];
+      const anim = getAnim();
       if (!anim) return;
       const from  = anim.playbackRate;
       const start = performance.now();
       function step(now: number) {
         const t      = Math.min((now - start) / duration, 1);
-        const eased  = 1 - Math.pow(1 - t, 3); // ease-out cubic
+        const eased  = 1 - Math.pow(1 - t, 3);
         anim.playbackRate = from + (to - from) * eased;
         if (t < 1) rafId = requestAnimationFrame(step);
       }
       rafId = requestAnimationFrame(step);
     }
 
+    // Hover: slow to a stop / resume at normal rate
     ticker.addEventListener('mouseenter', () => animateRate(0, 700));
-    ticker.addEventListener('mouseleave', () => animateRate(1, 900));
+    ticker.addEventListener('mouseleave', () => { if (!userPaused) animateRate(1, 900); });
+
+    // Pause button
+    if (pauseBtn && iconPause && iconPlay) {
+      pauseBtn.addEventListener('click', () => {
+        const anim = getAnim();
+        if (!anim) return;
+        userPaused = !userPaused;
+        if (userPaused) {
+          anim.pause();
+          pauseBtn.setAttribute('aria-label', 'Play scrolling ticker');
+          pauseBtn.setAttribute('aria-pressed', 'true');
+          iconPause.style.display = 'none';
+          iconPlay.style.display  = '';
+        } else {
+          anim.play();
+          animateRate(1, 400);
+          pauseBtn.setAttribute('aria-label', 'Pause scrolling ticker');
+          pauseBtn.setAttribute('aria-pressed', 'false');
+          iconPause.style.display = '';
+          iconPlay.style.display  = 'none';
+        }
+      });
+    }
+
+    // Off-screen pause — stop the animation entirely when not in viewport
+    const io = new IntersectionObserver((entries) => {
+      const anim = getAnim();
+      if (!anim) return;
+      if (entries[0].isIntersecting) {
+        if (!userPaused) anim.play();
+      } else {
+        anim.pause();
+      }
+    }, { threshold: 0 });
+    io.observe(ticker);
   }
 </script>

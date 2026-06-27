@@ -32,7 +32,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
           >
             <div class="card-photo">
               {item.image
-                ? <img src={`${base}${item.image}`} alt="" loading="lazy" />
+                ? <img src={`${base}${item.image}`} alt={`${item.title}${item.year ? `, ${item.year}` : ''}`} loading="lazy" />
                 : <span class="card-num" aria-hidden="true">
                     {String(i + 1).padStart(2, '0')}
                   </span>
@@ -49,8 +49,17 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
       <div class="deck-footer">
         <span class="deck-counter" id="rec-counter">1 / {recognition.length}</span>
-        <span class="deck-hint" aria-hidden="true">— click to advance</span>
+        <div class="rec-indicators" aria-hidden="true">
+          {recognition.map((_, i) => (
+            <span class="rec-dot" data-idx={String(i)}></span>
+          ))}
+        </div>
       </div>
+
+      <div class="rec-timer" aria-hidden="true">
+        <div class="rec-timer-bar" id="rec-timer-bar"></div>
+      </div>
+
       <!-- screen-reader live region -->
       <p class="visually-hidden" aria-live="polite" id="rec-live"></p>
     </div>
@@ -242,11 +251,11 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     max-width: none;
   }
 
-  /* ── Counter + hint ── */
+  /* ── Counter + dots ── */
   .deck-footer {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-md);
     margin-top: var(--space-xl);
     font-size: var(--text-sm);
     color: var(--ink-soft);
@@ -255,6 +264,51 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     font-weight: 600;
     color: var(--ink);
     font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+
+  .rec-indicators {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .rec-dot {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--line);
+    border: 1.5px solid var(--ink-soft);
+    opacity: 0.4;
+    transition: width 0.3s ease, border-radius 0.3s ease,
+                background 0.3s ease, opacity 0.3s ease;
+    flex-shrink: 0;
+  }
+  .rec-dot.is-active {
+    width: 22px;
+    border-radius: 4px;
+    background: var(--accent);
+    border-color: var(--accent);
+    opacity: 1;
+  }
+
+  /* ── Progress timer bar ── */
+  .rec-timer {
+    height: 2px;
+    background: var(--line);
+    border-radius: 1px;
+    margin-top: var(--space-sm);
+    overflow: hidden;
+  }
+  .rec-timer-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+  @keyframes timer-fill {
+    from { width: 0%; }
+    to   { width: 100%; }
   }
 
   @media (min-width: 860px) {
@@ -286,7 +340,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   const order  = cards.map((_, i) => i); // rotation queue: front is order[0]
   let step      = 0;
   let animating = false;
+  let paused    = false;
   const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dots     = [...document.querySelectorAll<HTMLElement>('.rec-dot')];
+  const timerBar = document.getElementById('rec-timer-bar') as HTMLElement | null;
 
   function applyPositions() {
     order.forEach((cardIdx, pos) => {
@@ -313,6 +370,16 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       } else {
         recBg.style.opacity = '0';
       }
+    }
+
+    // Sync dots
+    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === step));
+
+    // Restart progress bar animation
+    if (timerBar && !noMotion) {
+      timerBar.style.animation = 'none';
+      timerBar.offsetHeight; // force reflow
+      timerBar.style.animation = 'timer-fill 5s linear forwards';
     }
   }
 
@@ -355,4 +422,18 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   deck.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); advance(); }
   });
+
+  // Pause auto-advance and timer bar while hovering
+  const deckScene = deck.closest<HTMLElement>('.deck-scene');
+  deckScene?.addEventListener('mouseenter', () => {
+    paused = true;
+    if (timerBar) timerBar.style.animationPlayState = 'paused';
+  });
+  deckScene?.addEventListener('mouseleave', () => {
+    paused = false;
+    if (timerBar) timerBar.style.animationPlayState = 'running';
+  });
+
+  // Always-running interval — skips advance when paused
+  if (!noMotion) setInterval(() => { if (!paused) advance(); }, 5000);
 </script>

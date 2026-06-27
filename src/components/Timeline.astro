@@ -1,8 +1,12 @@
 ---
 import { timeline } from '../data/content';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
-<section id="timeline" class="section" aria-labelledby="timeline-heading">
+<section id="timeline" class="section tl-section" aria-labelledby="timeline-heading">
+  <div class="tl-bg" aria-hidden="true">
+    <img src={`${base}beach.webp`} alt="" loading="lazy" />
+  </div>
   <div class="container">
     <header class="tl-head" data-reveal>
       <span class="kicker">Career</span>
@@ -28,6 +32,39 @@ import { timeline } from '../data/content';
 </section>
 
 <style>
+  .tl-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Full-section backdrop — mirrors the Recognition section's .rec-bg:
+     inset: 0 + cover, anchored to the right, faded out toward the left. */
+  .tl-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  /* Image flush-right, fills full section height. Mask is on the image itself
+     so the gradient maps to the IMAGE's width — fading its own left edge. */
+  .tl-bg img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: auto;
+    max-width: none;
+    object-fit: cover;
+    opacity: 0.28;
+    mask-image: linear-gradient(to right, transparent 0%, black 55%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 55%);
+  }
+
+  .tl-section > .container {
+    position: relative;
+    z-index: 1;
+  }
+
   .tl-head { margin-bottom: var(--space-xl); }
   .tl-head h2 { margin-top: var(--space-xs); }
 
@@ -50,7 +87,8 @@ import { timeline } from '../data/content';
     text-align: right;
     padding-top: 0.15rem;
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--text-lg);
+    font-weight: 700;
     color: var(--accent-deep);
     white-space: nowrap;
   }
@@ -98,8 +136,10 @@ import { timeline } from '../data/content';
     color: var(--ink-soft);
   }
 
-  /* Mobile: a single spine on the left with dots; period above each entry */
+  /* Mobile: single left spine */
   @media (max-width: 640px) {
+    .tl-bg { display: none; }
+
     .timeline {
       padding-left: 1.5rem;
       border-left: 2px solid var(--line);

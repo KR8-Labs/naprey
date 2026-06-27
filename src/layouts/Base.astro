@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site } from '../data/content';
+import { site, hero, contact } from '../data/content';
 import { ghl } from '../data/ghl';
 
 interface Props {
@@ -12,6 +12,26 @@ const {
   title = site.title,
   description = site.description,
 } = Astro.props;
+
+const canonicalUrl = site.url + '/';
+const ogImage = `${site.url}/naprey.png`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": hero.name,
+  "url": site.url,
+  "jobTitle": hero.title,
+  "description": site.description,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Davao City",
+    "addressCountry": "PH"
+  },
+  "sameAs": contact.social.map((s) => s.url),
+  "email": contact.emails[0]?.address,
+  "telephone": contact.phone.tel,
+};
 ---
 
 <!doctype html>
@@ -22,21 +42,32 @@ const {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#8b4513" />
 
+    <link rel="canonical" href={canonicalUrl} />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="en_PH" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="666" />
+    <meta property="og:image:height" content="666" />
+    <meta property="og:image:alt" content={hero.name} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <title>{title}</title>
 
+    <!-- JSON-LD Person schema -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
     <!-- Favicon placeholder — replace public/favicon.svg with client's icon -->
-    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}favicon.svg`} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Enable scroll-reveal ONLY when motion is allowed. Without this class the
          pre-reveal hidden state never applies, so no-JS / reduced-motion renders
