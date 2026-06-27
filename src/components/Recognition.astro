@@ -423,16 +423,18 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); advance(); }
   });
 
-  // Pause auto-advance and timer bar while hovering
+  // Pause on hover — only on devices that actually support hover (not touch)
   const deckScene = deck.closest<HTMLElement>('.deck-scene');
-  deckScene?.addEventListener('mouseenter', () => {
-    paused = true;
-    if (timerBar) timerBar.style.animationPlayState = 'paused';
-  });
-  deckScene?.addEventListener('mouseleave', () => {
-    paused = false;
-    if (timerBar) timerBar.style.animationPlayState = 'running';
-  });
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    deckScene?.addEventListener('mouseenter', () => {
+      paused = true;
+      if (timerBar) timerBar.style.animationPlayState = 'paused';
+    });
+    deckScene?.addEventListener('mouseleave', () => {
+      paused = false;
+      if (timerBar) timerBar.style.animationPlayState = 'running';
+    });
+  }
 
   // Always-running interval — skips advance when paused
   if (!noMotion) setInterval(() => { if (!paused) advance(); }, 5000);

@@ -1,6 +1,8 @@
 ---
 import { contact } from '../data/content';
 import { ghl, ghlReady } from '../data/ghl';
+
+const hasBoth = ghlReady.form && ghlReady.calendar;
 ---
 
 <section id="contact" class="section section--alt" aria-labelledby="contact-heading">
@@ -11,47 +13,121 @@ import { ghl, ghlReady } from '../data/ghl';
       <p class="contact-intro">{contact.intro}</p>
     </header>
 
-    <div class="contact-form" data-reveal>
-      {ghlReady.form ? (
-        <iframe
-          src={ghl.formUrl}
-          title="Contact form — send Naprey a message"
-          class="ghl-frame ghl-form-frame"
-          loading="lazy"
-          sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
-          aria-label="GoHighLevel contact form"
-        ></iframe>
-      ) : (
-        <div class="ghl-placeholder" role="region" aria-label="Contact form — pending setup">
-          <p class="ghl-placeholder-msg">
-            The contact form will appear here once the GoHighLevel account is connected.
-            In the meantime, reach Naprey directly:
-          </p>
-          <ul class="contact-email-list" role="list">
-            {contact.emails.map((e) => (
-              <li>
-                <span class="contact-email-label">{e.label}</span>
-                <a href={`mailto:${e.address}`} class="contact-email-link">{e.address}</a>
-              </li>
-            ))}
-          </ul>
+    {/* Tab bar — only when both embeds are live; hidden on desktop via CSS */}
+    {hasBoth && (
+      <div class="contact-tabs" role="tablist" aria-label="Contact options" data-reveal>
+        <button
+          class="contact-tab is-active"
+          role="tab"
+          data-panel="form"
+          aria-selected="true"
+          aria-controls="contact-form-panel"
+          id="tab-form"
+        >Send a message</button>
+        <button
+          class="contact-tab"
+          role="tab"
+          data-panel="cal"
+          aria-selected="false"
+          aria-controls="contact-cal-panel"
+          id="tab-cal"
+        >Book a time</button>
+      </div>
+    )}
+
+    <div class={`contact-cols${hasBoth ? ' has-both' : ''}`} data-reveal>
+
+      {/* Form panel */}
+      <div
+        class="contact-col is-active"
+        id="contact-form-panel"
+        role={hasBoth ? 'tabpanel' : undefined}
+        aria-labelledby={hasBoth ? 'tab-form' : undefined}
+      >
+        {ghlReady.form ? (
+          <iframe
+            src={ghl.formUrl}
+            title="Contact form — send Naprey a message"
+            class="ghl-frame ghl-form-frame"
+            id="ghl-form-frame"
+            loading="lazy"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+            aria-label="GoHighLevel contact form"
+          ></iframe>
+        ) : (
+          <div class="ghl-placeholder" role="region" aria-label="Contact form — pending setup">
+            <p class="ghl-placeholder-msg">
+              The contact form will appear here once the GoHighLevel account is connected.
+              In the meantime, reach Naprey directly:
+            </p>
+            <ul class="contact-email-list" role="list">
+              {contact.emails.map((e) => (
+                <li>
+                  <span class="contact-email-label">{e.label}</span>
+                  <a href={`mailto:${e.address}`} class="contact-email-link">{e.address}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      {/* Calendar panel */}
+      {ghlReady.calendar && (
+        <div
+          class="contact-col"
+          id="contact-cal-panel"
+          role={hasBoth ? 'tabpanel' : undefined}
+          aria-labelledby={hasBoth ? 'tab-cal' : undefined}
+        >
+          <iframe
+            src={ghl.calendarUrl}
+            title="Appointment booking calendar"
+            class="ghl-frame ghl-cal-frame"
+            id="ghl-cal-frame"
+            loading="lazy"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-top-navigation"
+            aria-label="GoHighLevel booking calendar"
+          ></iframe>
         </div>
       )}
-    </div>
 
+    </div>
   </div>
 </section>
 
 <script>
-  // Auto-resize GHL form iframe when it broadcasts its height via postMessage
-  const formFrame = document.querySelector<HTMLIFrameElement>('.ghl-form-frame');
+  // Auto-resize GHL iframes via postMessage.
+  // Initial heights prevent a scrollbar while GHL loads; postMessage sets the exact size.
+  const formFrame = document.getElementById('ghl-form-frame') as HTMLIFrameElement | null;
+  const calFrame  = document.getElementById('ghl-cal-frame')  as HTMLIFrameElement | null;
+  if (formFrame) formFrame.style.height = '900px';
+  if (calFrame)  calFrame.style.height  = '750px';
 
-  window.addEventListener('message', (e) => {
+  window.addEventListener('message', (e: MessageEvent) => {
     if (e.origin !== 'https://api.leadconnectorhq.com') return;
-    const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-    const height = data?.height ?? data?.['iframe-height'];
-    if (!height || typeof height !== 'number') return;
-    if (e.source === formFrame?.contentWindow) formFrame.style.height = `${height}px`;
+    let data: Record<string, unknown>;
+    try { data = typeof e.data === 'string' ? JSON.parse(e.data) : (e.data as Record<string, unknown>); }
+    catch { return; }
+    const height = (data?.height ?? data?.['iframe-height']) as number | undefined;
+    if (typeof height !== 'number') return;
+    if (e.source === formFrame?.contentWindow && formFrame) formFrame.style.height = `${height}px`;
+    if (e.source === calFrame?.contentWindow  && calFrame)  calFrame.style.height  = `${height}px`;
+  });
+
+  // Mobile tab toggle
+  const tabs   = [...document.querySelectorAll<HTMLElement>('.contact-tab')];
+  const panels = [...document.querySelectorAll<HTMLElement>('.contact-col')];
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.panel;
+      tabs.forEach(t => {
+        const on = t === tab;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', String(on));
+      });
+      panels.forEach(p => p.classList.toggle('is-active', p.id === `contact-${target}-panel`));
+    });
   });
 </script>
 
@@ -64,20 +140,76 @@ import { ghl, ghlReady } from '../data/ghl';
     line-height: 1.5;
   }
 
-  .contact-form { margin-bottom: var(--space-xl); }
+  /* ── Tab bar (mobile only) ── */
+  .contact-tabs {
+    display: flex;
+    gap: 3px;
+    background: var(--paper-2);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 3px;
+    margin-bottom: var(--space-lg);
+  }
+  .contact-tab {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    min-height: 44px;
+  }
+  .contact-tab.is-active {
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 1px 4px rgba(26, 20, 16, 0.1);
+  }
+  .contact-tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
 
-  /* GHL iframe */
+  /* ── Column layout ── */
+  /* Mobile: panels hidden, shown by .is-active (JS) */
+  .contact-col { display: none; }
+  .contact-col.is-active { display: block; }
+
+  /* Desktop: both columns always visible side by side */
+  @media (min-width: 860px) {
+    .contact-tabs { display: none; }
+
+    .contact-cols.has-both {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    /* Override mobile hide — both panels always shown; stretch to match row height */
+    .contact-col { display: flex; flex-direction: column; }
+
+    /* Calendar iframe fills the column so it matches the form height */
+    .ghl-cal-frame { flex: 1; }
+  }
+
+  /* ── GHL iframes ── */
   .ghl-frame {
     width: 100%;
     border: none;
     border-radius: 12px;
     display: block;
   }
-  .ghl-form-frame { min-height: 750px; }
-  @media (max-width: 640px) {
-    .ghl-form-frame { min-height: 680px; }
+  /* No min-height on mobile — JS sets initial height; postMessage shrinks to exact fit */
+  /* Desktop: form needs a floor before postMessage fires so the grid doesn't collapse */
+  @media (min-width: 860px) {
+    .ghl-form-frame { min-height: 750px; }
   }
 
+  /* ── Placeholder (when GHL not yet connected) ── */
   .ghl-placeholder {
     padding: var(--space-md);
     background: var(--paper-2);
@@ -103,5 +235,4 @@ import { ghl, ghlReady } from '../data/ghl';
     font-weight: 600;
     color: var(--ink-soft);
   }
-
 </style>
