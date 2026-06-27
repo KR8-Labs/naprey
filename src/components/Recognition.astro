@@ -58,7 +58,14 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 </section>
 
 <style>
-  .rec-section { overflow: hidden; position: relative; }
+  .rec-section {
+    overflow: hidden;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
   .rec-bg {
     position: absolute;
@@ -74,6 +81,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   .rec-section > .container {
     position: relative;
     z-index: 1;
+    width: 100%;
   }
   .rec-head { margin-bottom: var(--space-xl); }
   .rec-head h2 { margin-top: var(--space-xs); }
