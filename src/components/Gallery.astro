@@ -263,7 +263,11 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
 </style>
 
 <script>
-  // Desktop hover / tap-to-expand (unchanged on desktop)
+  const cats = Array.from(document.querySelectorAll('.gal-category'));
+  const pin = document.querySelector<HTMLElement>('.gal-pin');
+  const mqMobile = window.matchMedia('(max-width: 599px)');
+
+  // Desktop hover / tap-to-expand; click only on desktop (mobile uses scroll)
   document.querySelectorAll('.gal-strip').forEach(strip => {
     strip.querySelectorAll('.gal-item').forEach(item => {
       const activate = () => {
@@ -271,13 +275,9 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
         item.classList.add('is-active');
       };
       item.addEventListener('mouseenter', activate);
-      item.addEventListener('click', activate);
+      if (!mqMobile.matches) item.addEventListener('click', activate);
     });
   });
-
-  const cats = Array.from(document.querySelectorAll('.gal-category'));
-  const pin = document.querySelector<HTMLElement>('.gal-pin');
-  const mqMobile = window.matchMedia('(max-width: 599px)');
   const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   let current = 0;
