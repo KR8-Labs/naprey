@@ -229,7 +229,6 @@ export const gallery = {
     {
       name: "Community Outreach",
       items: [
-        { src: "/community-outreach/back-to-school-1.jpg", alt: "Back to School outreach event", label: "Back to School" },
         { src: "/community-outreach/back-to-school-2.jpg", alt: "Back to School project", label: "Back to School" },
         { src: "/community-outreach/back-to-school-3.jpg", alt: "Back 2 School project", label: "Back to School" },
         { src: "/community-outreach/back-to-school-4.jpg", alt: "Back to School project event", label: "Back to School" },

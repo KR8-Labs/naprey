@@ -268,3 +268,16 @@ strong { font-weight: 600; }
   .js-reveal [data-reveal-strict] { opacity: 1; transform: none; }
   .btn:hover { transform: none; }
 }
+
+/* ─── Gallery pin (mobile) ───────────────────────────────────────────────────
+   While the gallery is pinned, slide the sticky nav out of the way so the
+   ‹ › category controls at the top of the pinned view stay visible/tappable.
+   The `gallery-pinned` class is toggled on <html> by Gallery.astro (mobile
+   + non-reduced-motion only). */
+.site-header { transition: transform 0.3s ease; }
+@media (max-width: 599px) {
+  html.gallery-pinned .site-header {
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
+}
