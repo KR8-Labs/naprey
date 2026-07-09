@@ -257,7 +257,6 @@ export const gallery = {
     {
       name: "Events",
       items: [
-        { src: "/events/aaas-award.jpg", alt: "AAAS Award", label: "AAAS Award" },
         { src: "/events/alumni-summit.jpg", alt: "Alumni Summit", label: "Alumni Summit" },
         { src: "/events/aus-awards-alumni-grant.jpg", alt: "Australia Awards Alumni Grant", label: "Aus Awards Alumni Grant" },
         { src: "/events/australia-awards-ceremony.jpg", alt: "Australia Awards Ceremony", label: "Awards Ceremony" },
@@ -271,10 +270,7 @@ export const gallery = {
         { src: "/events/gedsi-summit.jpg", alt: "GEDSI Summit", label: "GEDSI Summit" },
         { src: "/events/google-training.jpg", alt: "Google training", label: "Google Training" },
         { src: "/events/happiest-pinoy.jpg", alt: "Happiest Pinoy", label: "Happiest Pinoy" },
-        { src: "/events/pwd-fun-run.jpg", alt: "PWD Fun Run", label: "PWD Fun Run" },
-        { src: "/events/rdc-2.jpg", alt: "RDC event", label: "RDC" },
         { src: "/events/rdc-national-convention.jpg", alt: "RDC National Convention", label: "RDC Convention" },
-        { src: "/events/rdc-national.jpg", alt: "RDC National", label: "RDC National" },
         { src: "/events/rdc-xi-council-meeting.jpg", alt: "RDC XI Council Meeting", label: "RDC XI Council" },
         { src: "/events/beijing-1.jpg", alt: "Beijing trip", label: "Beijing" },
         { src: "/events/beijing-2.jpg", alt: "Beijing trip", label: "Beijing" },
