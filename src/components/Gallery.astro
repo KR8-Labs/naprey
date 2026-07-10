@@ -13,7 +13,7 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
 
     <div class="gal-pin">
       <div class="gal-pin-inner">
-        {gallery.categories.map((category) => (
+        {gallery.categories.map((category, catIdx) => (
           <div class="gal-category" data-reveal>
             <div class="gal-cat-head">
               <button type="button" class="gal-nav gal-prev" aria-label="Previous category">
@@ -25,10 +25,17 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
               </button>
             </div>
             <ul class="gal-strip" role="list">
-              {category.items.map((item) => (
+              {category.items.map((item, itemIdx) => (
                 <li class="gal-item" tabindex="0" aria-label={item.alt}>
                   {item.src
-                    ? <img src={item.src} alt={item.alt} loading="lazy" />
+                    ? <img
+                        src={item.src}
+                        alt={item.alt}
+                        loading="lazy"
+                        width={item.w}
+                        height={item.h}
+                        fetchpriority={catIdx === 0 && itemIdx === 0 ? 'high' : undefined}
+                      />
                     : <div class="gal-placeholder" aria-hidden="true" />
                   }
                 </li>
