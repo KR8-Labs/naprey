@@ -13,8 +13,9 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
 
     <div class="gal-pin">
       <div class="gal-pin-inner">
+        <div class="gal-cat-stage">
         {gallery.categories.map((category, catIdx) => (
-          <div class="gal-category" data-reveal>
+          <div class="gal-category">
             <div class="gal-cat-head">
               <button type="button" class="gal-nav gal-prev" aria-label="Previous category">
                 <ChevronLeft aria-hidden="true" />
@@ -43,6 +44,7 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
             </ul>
           </div>
         ))}
+        </div>
 
         <a href="#partnerships" class="gal-skip">
           Skip gallery
@@ -168,14 +170,28 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
       padding-block: var(--space-lg);
     }
 
-    /* Show only the current category; buttons cycle between them */
-    .gal-category { display: none; margin-top: 0; }
-    .gal-category.is-current {
+    /* Stage: fills available height, categories stack on top of each other */
+    .gal-cat-stage {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* All categories occupy the full stage; crossfade via opacity */
+    .gal-category {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      flex: 1;
-      min-height: 0;
+      position: absolute;
+      inset: 0;
+      margin-top: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .gal-category.is-current {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .gal-cat-head {
@@ -263,7 +279,9 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
       height: auto;
       padding-block: 0;
     }
-    .gal-category.is-current { display: block; }
+    .gal-cat-stage { position: static; height: auto; }
+    .gal-category { position: static; opacity: 0; transition: none; }
+    .gal-category.is-current { opacity: 1; }
     .gal-strip { height: clamp(400px, 70vh, 620px); flex: none; }
     .gal-skip { animation: none; }
   }
@@ -374,9 +392,17 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
   let current = 0;
   const showCategory = (i: number) => {
     current = (i + cats.length) % cats.length;
-    cats.forEach((c, idx) => c.classList.toggle('is-current', idx === current));
-    // Hide boundary nav buttons (visibility:hidden keeps layout stable)
     cats.forEach((c, idx) => {
+      c.classList.toggle('is-current', idx === current);
+      // Drive opacity via inline style so it wins over reveal-system CSS
+      if (mqMobile.matches) {
+        c.style.opacity = idx === current ? '1' : '0';
+        c.style.pointerEvents = idx === current ? '' : 'none';
+      } else {
+        c.style.opacity = '';
+        c.style.pointerEvents = '';
+      }
+      // Hide boundary nav buttons (visibility:hidden keeps layout stable)
       const prev = c.querySelector<HTMLButtonElement>('.gal-prev');
       const next = c.querySelector<HTMLButtonElement>('.gal-next');
       if (prev) prev.style.visibility = idx === 0 ? 'hidden' : '';
