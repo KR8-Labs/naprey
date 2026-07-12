@@ -1,77 +1,14 @@
-// All site copy lives here. Edit this file to update text without touching markup.
+// All site copy lives in content.json. This file only adds types on top —
+// edit content.json (by hand, or via /admin) to update text, not this file.
+import raw from './content.json';
 
-export const site = {
-  title: "Naprey Almario · Disability Champion · Entrepreneur",
-  description:
-    "Naprey Almario is a PWD advocate, entrepreneur, and educator from Davao City, Philippines, turning disability into ability and championing accessibility and inclusion.",
-  url: "https://napreyalmario.online",
-  locale: "en_PH",
-};
-
-export const nav = {
-  links: [
-    { label: "Story", href: "#story" },
-    { label: "Work", href: "#work" },
-    { label: "Advocacy", href: "#advocacy" },
-    { label: "Gallery", href: "#gallery" },
-  ],
-};
-
-export const hero = {
-  name: "Naprey Almario",
-  brand: "Behind the Rolling Chair",
-  title: "Disability Inclusion Champion · Accessible Travel Advocate · Entrepreneur",
-  location: "Davao City, Philippines",
-  tagline: "Beyond every wheelchair is a person with dreams, purpose and limitless potential.",
-  intro:
-    "I am Naprey Almario, a Filipino disability champion committed to proving that disability is never a barrier to making an impact. Through accessible travel, community empowerment and business, I strive to create opportunities, inspire resilience and help build a more inclusive society.",
-  secondary:
-    "This page shares my journey — from overcoming challenges to building businesses, promoting accessible tourism, supporting persons with disabilities and encouraging others to pursue their dreams regardless of life's obstacles.",
-  cta: { label: "Work with me", href: "#contact" },
-  secondaryCta: { label: "Read my story", href: "#story" },
-};
-
-// Credibility strip shown directly under the hero — quick trust signals.
-// All drawn from verified achievements in `work` below.
-export const proof = {
-  lead: "Recognition & Affiliations",
-  items: [
-    "Private Sector Representative — Regional Development Council XI",
-    "Australia Awards Scholar, Curtin University",
-    "Biennial Recognition Award (Nominee) — National Council on Disability Affairs",
-    "Happiest Pinoy (Entrepreneur Category) — Cebuana Lhuillier",
-    "Air Asia Philippines Brand Ambassador",
-    "Pinoy Big Brother (Season 4) Housemate",
-  ],
-};
-
-// Client-facing framing for the Work/Services section.
-export const services = {
-  kicker: "Work with me",
-  heading: "How we can work together",
-  intro:
-    "Accessible travel, studying and working abroad, speaking and training, and inclusive business. Practical ways I help people and organizations move forward.",
-  cta: { label: "Start a conversation", href: "#contact" },
-};
-
-// Mid-page conversion banner (drenched ink section).
-export const ctaBanner = {
-  heading: "Let's build something inclusive together.",
-  body:
-    "Travel, education abroad, a speaking engagement, or an advocacy partnership. Tell me what you have in mind.",
-  cta: { label: "Get in touch", href: "#contact" },
-};
-
-export const story = {
-  heading: "My Story",
-  paragraphs: [
-    "At eight years old, polio paralyzed both my lower extremities. For nearly a year, I was in hospitals. The active kid I once was was replaced by someone who would never walk again. I questioned everything. But eventually, I made a decision: my disability would shape my life, but it would not define my future.",
-    "That decision changed the direction of my life. I pursued a BS in IT, delivered the graduation speech, became a college instructor, and later an Associate Professor teaching Information Technology at the University of Mindanao. I earned a master's degree and an Australia Awards Scholarship to Curtin University in Perth. In 2011, I joined Pinoy Big Brother Season 4, where audiences came to know me as the \"Strong Wheeled Teacher ng Davao\" — a nickname that carried the disability-inclusion message to millions of Filipinos. Along the way, I realized my purpose wasn't just to succeed. It was to create opportunities for others.",
-    "I founded Behind the Rolling Chair to champion accessibility, launched an accessible-tourism travel agency, opened a top-performing Cebuana Lhuillier branch where I intentionally hire people with disabilities, and built businesses including Hub International Education and Laundry Vuitton. I also lead the Association of Differently-abled Persons (ADAP) and serve as GEDSI Convenor for the Australia Alumni Communities Philippines, and I was appointed Private Sector Representative for the PWD and Senior Citizen sector on the Regional Development Council XI for the 2025–2028 term. In 2025, I was named a Top 10 finalist for Cebuana Lhuillier's \"Happiest Pinoy\" award for creating inclusive livelihood opportunities for persons with disabilities. Today, everything I do is driven by one belief: disability should never limit someone's opportunity to live, work, or thrive.",
-  ],
-  pullQuote:
-    "Purpose is greater than circumstance.",
-};
+export const site = raw.site;
+export const nav = raw.nav;
+export const hero = raw.hero;
+export const proof = raw.proof;
+export const services = raw.services;
+export const ctaBanner = raw.ctaBanner;
+export const story = raw.story;
 
 export type WorkItem = {
   name: string;
@@ -80,78 +17,14 @@ export type WorkItem = {
   description: string;
   highlight?: string;
 };
-
-export const work: WorkItem[] = [
-  {
-    name: "Almario Travel and Tours",
-    role: "Founder & Travel Sales Consultant",
-    period: "2015 – Present",
-    description:
-      "Accessible-tourism agency handling tickets, tours, and visa processing for destinations welcoming to persons with disability.",
-    highlight: "Accessible tourism pioneer in Mindanao",
-  },
-  {
-    name: "Hub International Education – Davao",
-    role: "Managing Director",
-    period: "2019 – Present",
-    description:
-      "Country office managing study and work placements in Australia and Canada for Filipino students and professionals.",
-  },
-  {
-    name: "Cebuana Lhuillier Bills Payment Center",
-    role: "Owner & Operator",
-    period: "2020 – Present",
-    description:
-      "Opened during the pandemic and now top-ranked in the Davao Region, with a deliberate policy of employing people with disabilities.",
-    highlight: "Top 1 in Davao Region, 2025 Q1",
-  },
-  {
-    name: "Public Speaking & Education",
-    role: "Speaker · Educator · Advocate",
-    period: "2009 – Present",
-    description:
-      "A decade of college instruction, keynote speaking, and disability-inclusion training at local and international events.",
-  },
-];
+export const work = raw.work as WorkItem[];
 
 export type AdvocacyItem = {
   title: string;
   description: string;
-  image?: string; /* path in /public, e.g. "advocacy/accessibility.webp" — omit for placeholder */
+  image?: string; /* path in /public, e.g. "advocacy/accessibility.webp", or a full Cloudinary URL — omit for placeholder */
 };
-
-export const advocacy: AdvocacyItem[] = [
-  {
-    title: "Accessibility",
-    description:
-      "Accessibility audits, consultation and assessment. Training on accessible tours. Accessibility content creation. Social media campaigns and brand collaboration.",
-    image: "advocacy/accessibility.webp",
-  },
-  {
-    title: "Disability Inclusion",
-    description:
-      "Disability awareness seminars. Customer service training for serving guests with disabilities. Inclusive workplace training.",
-    image: "advocacy/disability-inclusion.webp",
-  },
-  {
-    title: "Speaking Engagements",
-    description:
-      "Inspirational keynotes. Entrepreneurship and resilience. Livelihood and social entrepreneurship.",
-    image: "advocacy/speaking-engagements.webp",
-  },
-  {
-    title: "Community Projects",
-    description:
-      "Community outreach programs. Fundraising events.",
-    image: "advocacy/community-projects.webp",
-  },
-  {
-    title: "Partnerships",
-    description:
-      "Brands and organizations Naprey has partnered with to advance accessibility and inclusion.",
-    image: "advocacy/partnerships.webp",
-  },
-];
+export const advocacy = raw.advocacy as AdvocacyItem[];
 
 export type MilestoneItem = {
   title: string;
@@ -159,53 +32,9 @@ export type MilestoneItem = {
   year?: string;
   image?: string; /* path in /public, e.g. "milestones/australia-awards.webp" */
 };
-
 // Preserved from the previous card-carousel Recognition section. Not currently
 // rendered anywhere — kept as a candidate for a future Gallery/Updates feature.
-export const milestones: MilestoneItem[] = [
-  {
-    title: "Australia Awards Scholar",
-    body: "Full Australian Government scholarship to Curtin University, Perth.",
-    year: "2017–2018",
-    image: 'milestones/grad.webp',
-  },
-  {
-    title: "Pinoy Big Brother Season 4 Housemate",
-    body: "Amplified the disability-inclusion message to millions of Filipinos.",
-    year: "2011–2012",
-    image: 'milestones/bigbrother.webp',
-  },
-  {
-    title: "Air Asia Philippines Brand Ambassador",
-    body: "National airline commercial promoting accessible and inclusive travel.",
-    year: "2018–2019",
-    image: 'milestones/airasia.webp',
-  },
-  {
-    title: "Cebuana Lhuillier Happiest Pinoy Ambassador",
-    body: "Named ambassador and Happiest Pinoy Finalist for resilience and impact.",
-    year: "2016–2017",
-    image: 'milestones/cebuana.webp',
-  },
-  {
-    title: "The Good Story Award",
-    body: "Our Better World, Singapore. Turning adversity into purpose.",
-    year: "2014",
-    image: 'milestones/thegoodstoryaward.webp',
-  },
-  {
-    title: "Blogger of the Year & Best Advocacy Blogger",
-    body: "Davao Bloggers Society and Mindanao Blog Awards.",
-    year: "2013",
-    image: 'milestones/bloggeraward.webp',
-  },
-  {
-    title: "Rappler Do More Awards, Luminary Finalist",
-    body: "Recognised by Rappler as a community changemaker.",
-    year: "2013",
-    image: 'milestones/rappler.webp',
-  },
-];
+export const milestones = raw.milestones as MilestoneItem[];
 
 export type GalleryItem = {
   src?: string;  /* omit until real photo is ready */
@@ -221,104 +50,19 @@ export type GalleryCategory = {
 };
 
 export const gallery = {
-  kicker: "In the field",
-  heading: "Gallery",
-  intro:
-    "Photos from community outreach, accessible travel, and speaking engagements.",
-  categories: [
-    {
-      name: "Community Outreach",
-      items: [
-        { src: "/community-outreach/back-to-school-2.webp", alt: "Back to School project", label: "Back to School", w: 842, h: 492 },
-        { src: "/community-outreach/back-to-school-3.webp", alt: "Back 2 School project", label: "Back to School", w: 2048, h: 1365 },
-        { src: "/community-outreach/back-to-school-4.webp", alt: "Back to School project event", label: "Back to School", w: 2048, h: 1365 },
-        { src: "/community-outreach/back-to-school-5.webp", alt: "Back to School project photo", label: "Back to School", w: 582, h: 396 },
-        { src: "/community-outreach/pwd-group.webp", alt: "Leading a PWD group", label: "PWD Group", w: 1063, h: 883 },
-        { src: "/community-outreach/pwd-campaign.webp", alt: "PWD campaign", label: "PWD Campaign", w: 960, h: 640 },
-        { src: "/community-outreach/pwd-gift-giving.webp", alt: "PWD gift giving event", label: "PWD Gift Giving", w: 960, h: 640 },
-        { src: "/community-outreach/pandemic-gift-giving.webp", alt: "Pandemic gift giving outreach", label: "Pandemic Relief", w: 1293, h: 1084 },
-        { src: "/community-outreach/community-1.webp", alt: "Community outreach event", label: "Outreach", w: 2048, h: 1536 },
-        { src: "/community-outreach/community-2.webp", alt: "Community outreach event", label: "Outreach", w: 2048, h: 1365 },
-        { src: "/community-outreach/community-3.webp", alt: "Community outreach event", label: "Outreach", w: 2048, h: 1365 },
-        { src: "/community-outreach/community-4.webp", alt: "Community outreach event", label: "Outreach", w: 960, h: 892 },
-        { src: "/community-outreach/community-5.webp", alt: "Community outreach event", label: "Outreach", w: 2048, h: 1365 },
-        { src: "/community-outreach/community-6.webp", alt: "Community outreach event", label: "Outreach", w: 1080, h: 714 },
-      ],
-    },
-    {
-      name: "Travel Photos",
-      items: [
-        { src: "/travel-photos/adventure.webp", alt: "Adventure travel", label: "Adventure", w: 960, h: 720 },
-        { src: "/travel-photos/japan-travel.webp", alt: "Japan travel", label: "Japan", w: 2048, h: 1152 },
-        { src: "/travel-photos/new-zealand.webp", alt: "New Zealand trip", label: "New Zealand", w: 4896, h: 3264 },
-        { src: "/travel-photos/palawan.webp", alt: "Palawan, Philippines", label: "Palawan", w: 2047, h: 2048 },
-        { src: "/travel-photos/scuba-diving-palawan.webp", alt: "Scuba diving in Palawan", label: "Scuba Palawan", w: 480, h: 360 },
-        { src: "/travel-photos/scuba-diving-samal.webp", alt: "Scuba diving in Samal", label: "Scuba Samal", w: 2048, h: 1536 },
-        { src: "/travel-photos/wheels-on-beach.webp", alt: "Wheelchair on the beach", label: "Beach", w: 3139, h: 2204 },
-        { src: "/travel-photos/data-5.webp", alt: "Travel photo", label: "Travel", w: 1080, h: 720 },
-        { src: "/travel-photos/data-9.webp", alt: "Travel photo", label: "Travel", w: 1536, h: 2058 },
-        { src: "/travel-photos/data-12.webp", alt: "Travel photo", label: "Travel", w: 1080, h: 687 },
-        { src: "/travel-photos/data-13.webp", alt: "Travel photo", label: "Travel", w: 1782, h: 1335 },
-        { src: "/travel-photos/data-16.webp", alt: "Travel photo", label: "Travel", w: 2048, h: 1152 },
-        { src: "/travel-photos/data-22.webp", alt: "Travel photo", label: "Travel", w: 1536, h: 2048 },
-      ],
-    },
-    {
-      name: "Events",
-      items: [
-        { src: "/events/aus-awards-alumni-grant.webp", alt: "Australia Awards Alumni Grant", label: "Aus Awards Alumni Grant", w: 2048, h: 1536 },
-        { src: "/events/australia-awards-ceremony.webp", alt: "Australia Awards Ceremony", label: "Awards Ceremony", w: 750, h: 492 },
-        { src: "/events/australia-awards-speaker.webp", alt: "Speaking at Australia Awards", label: "Awards Speaker", w: 840, h: 560 },
-        { src: "/events/australia-awards.webp", alt: "Australia Awards", label: "Australia Awards", w: 1440, h: 960 },
-        { src: "/events/content-accessibility-campaign.webp", alt: "Content Accessibility Campaign", label: "Accessibility Campaign", w: 2048, h: 1536 },
-        { src: "/events/data-7.webp", alt: "Data event photo", label: "Data Event", w: 4032, h: 3024 },
-        { src: "/events/data-8.webp", alt: "Data event photo", label: "Data Event", w: 1536, h: 2048 },
-        { src: "/events/data-11.webp", alt: "Data event photo", label: "Data Event", w: 2304, h: 1536 },
-        { src: "/events/gedsi-hosting.webp", alt: "GEDSI event hosting", label: "GEDSI Hosting", w: 2048, h: 1073 },
-        { src: "/events/gedsi-summit.webp", alt: "GEDSI Summit", label: "GEDSI Summit", w: 1280, h: 960 },
-        { src: "/events/google-training.webp", alt: "Google training", label: "Google Training", w: 1022, h: 682 },
-        { src: "/events/happiest-pinoy.webp", alt: "Happiest Pinoy", label: "Happiest Pinoy", w: 4284, h: 5712 },
-        { src: "/events/rdc-national-convention.webp", alt: "RDC National Convention", label: "RDC Convention", w: 2048, h: 1536 },
-        { src: "/events/rdc-xi-council-meeting.webp", alt: "RDC XI Council Meeting", label: "RDC XI Council", w: 2048, h: 1365 },
-        { src: "/events/beijing-1.webp", alt: "Beijing trip", label: "Beijing", w: 516, h: 602 },
-        { src: "/events/singapore-2.webp", alt: "Singapore trip", label: "Singapore", w: 1198, h: 798 },
-      ],
-    },
-  ] as GalleryCategory[],
+  ...raw.gallery,
+  categories: raw.gallery.categories as GalleryCategory[],
 };
 
 export type PartnershipItem = {
   name: string;
   description?: string;
-  logo?: string; /* path in /public, e.g. "partners/brand.webp" */
+  logo?: string; /* path in /public, e.g. "partners/brand.webp", or a full Cloudinary URL */
 };
 
 export const partnerships = {
-  kicker: "Partnerships",
-  heading: "Brands I've partnered with",
-  intro: "Brands and organizations Naprey has partnered with to advance accessibility and inclusion.",
-  items: [
-    { name: "SM City Davao", logo: "partners/sm-city-davao.jpeg" },
-    { name: "Cebu Pacific Air", logo: "partners/cebu-pacific-air.jpg" },
-    { name: "San Miguel", logo: "partners/san-miguel.jpg" },
-    { name: "Fujifilm", logo: "partners/fujifilm.jpeg" },
-    { name: "MX3", logo: "partners/mx3.jpeg" },
-    { name: "NCCC Cares", logo: "partners/nccc-cares.jpg" },
-    { name: "Green Windows", logo: "partners/green-windows.jpg" },
-    { name: "APM", logo: "partners/apm.jpg" },
-    { name: "SWA", logo: "partners/swa.jpg" },
-    { name: "ATDC", logo: "partners/atdc.jpg" },
-    { name: "RDL", logo: "partners/rdl.jpg" },
-    { name: "Arlene Basquez Academy of Beauty", logo: "partners/arlene-basquez-academy-of-beauty.jpeg" },
-    { name: "My Skin Origins", logo: "partners/my-skin-origins.jpg" },
-    { name: "Project SELP Davao", logo: "partners/project-selp-davao.jpeg" },
-    { name: "Helen's Kitchen", logo: "partners/helens-kitchen.jpg" },
-    { name: "Holy Child College", logo: "partners/holy-child-college.jpg" },
-    { name: "Xtreme Makeover", logo: "partners/xtreme-makeover.jpg" },
-    { name: "Penong's Barbecue", logo: "partners/penongs-barbecue.jpg" },
-    { name: "Step Productions", logo: "partners/step-productions.jpg" },
-    { name: "Manang's Chicken", logo: "partners/manangs-chicken.jpg" },
-  ] as PartnershipItem[],
+  ...raw.partnerships,
+  items: raw.partnerships.items as PartnershipItem[],
 };
 
 export type UpdateItem = {
@@ -328,38 +72,13 @@ export type UpdateItem = {
 };
 
 export const updates = {
-  kicker: "News",
-  heading: "Latest updates",
-  items: [
-    {
-      date: "July 9, 2026",
-      title: "Entrepreneur, Accessible Tourism Advocate",
-      body: "Finalists for the 2026 Extraordinary Filipino – Entrepreneur with Disability category!",
-    },
-  ] as UpdateItem[],
+  ...raw.updates,
+  items: raw.updates.items as UpdateItem[],
 };
 
-export const contact = {
-  heading: "Get in Touch",
-  intro:
-    "Whether you want to inquire about travel, study abroad, speaking engagements, or disability advocacy, I would love to hear from you.",
-  emails: [
-    { label: "General enquiries", address: "almario1988@gmail.com" },
-    { label: "Advocacy / Behind the Rolling Chair", address: "behindrollingchair@gmail.com" },
-  ],
-  phone: { display: "0995 014 2300", tel: "+639950142300" },
-  location: "Davao City, Philippines",
-  social: [
-    {
-      platform: "Facebook",
-      label: "napzalmario",
-      url: "https://www.facebook.com/napzalmario",
-    },
-  ],
-};
+export const contact = raw.contact;
 
 export const footer = {
-  name: "Naprey Almario",
-  tagline: "Disability Inclusion Champion · Accessible Travel Advocate · Entrepreneur",
-  copy: `© ${new Date().getFullYear()} Naprey Almario. All rights reserved.`,
+  ...raw.footer,
+  copy: `© ${new Date().getFullYear()} ${raw.footer.name}. All rights reserved.`,
 };

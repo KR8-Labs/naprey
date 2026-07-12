@@ -1,0 +1,37 @@
+# Local-only secrets for `wrangler pages dev` (the Cloudflare Pages Functions
+# in functions/api/). Copy this file to .dev.vars and fill in real values —
+# .dev.vars is gitignored and never deployed; it has nothing to do with the
+# real Cloudflare Pages project's env vars/secrets, which are configured
+# separately in the Cloudflare dashboard (see the plan doc).
+
+# ── Option A: zero-setup sandbox (recommended for just trying the admin UI) ──
+# With both of these set, GITHUB_OWNER/GITHUB_REPO/GITHUB_PAT below aren't
+# read at all: /api/content serves the real src/data/content.json bundled at
+# dev-server start, and "Publish changes" succeeds without touching GitHub.
+# R2 uploads still genuinely work (Wrangler emulates the bucket locally) —
+# only the GitHub read/write side is mocked. Good enough to exercise the
+# whole admin UI end to end with no GitHub setup at all.
+LOCAL_DEV_BYPASS_ACCESS=true
+LOCAL_DEV_SAMPLE_CONTENT=true
+
+# ── Option B: real GitHub round-trip against a scratch repo ──
+# Only needed if you want to test the ACTUAL commit flow. Point these at a
+# disposable throwaway repo — NOT the real ygglue/naprey — since
+# save-content.ts will really commit to whatever repo you put here. Only the
+# real Cloudflare Pages project should ever point at ygglue/naprey. Leave
+# LOCAL_DEV_SAMPLE_CONTENT unset (or 'false') to use this path instead.
+# GITHUB_OWNER=your-github-username
+# GITHUB_REPO=your-scratch-test-repo
+# GITHUB_PAT=github_pat_REPLACE_WITH_A_TOKEN_SCOPED_TO_THE_SCRATCH_REPO_ONLY
+
+# ── Optional: exercise real Access JWT verification locally ──
+# Only needed if you want to test verifyAccessJwt itself rather than using
+# the LOCAL_DEV_BYPASS_ACCESS shortcut above.
+# ACCESS_TEAM_DOMAIN=yourteam.cloudflareaccess.com
+# ACCESS_AUD=your-access-application-aud-tag
+
+# The R2 binding (see wrangler.toml) is emulated locally regardless of this
+# value — it's only used to build the "public URL" returned after an upload,
+# which won't actually resolve to a real image locally. A placeholder is fine
+# for verifying the upload flow's logic/response shape.
+R2_PUBLIC_BASE_URL=http://localhost:8788/local-r2-placeholder

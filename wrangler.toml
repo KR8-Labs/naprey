@@ -1,0 +1,17 @@
+# Local development only. Cloudflare Pages projects are configured via the
+# dashboard (see the plan doc's "Setup steps outside the codebase") — this
+# file's job is purely to let `wrangler pages dev` emulate bindings locally.
+# Deliberately holds no secrets or environment-specific values (those live in
+# .dev.vars, gitignored) so there's no risk of a local placeholder leaking
+# into how production is actually configured.
+name = "naprey"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-07-01"
+
+# R2 binding — Wrangler emulates this bucket entirely locally by default
+# (persisted under .wrangler/), no real Cloudflare account or bucket needed
+# for local dev. bucket_name only matters once actually deployed; make sure
+# it matches whatever real bucket you create then.
+[[r2_buckets]]
+binding = "IMAGES_BUCKET"
+bucket_name = "naprey-site-images"

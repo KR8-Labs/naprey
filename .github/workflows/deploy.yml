@@ -1,21 +1,16 @@
-name: Deploy to GitHub Pages
+name: Deploy to Cloudflare Pages
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,16 +23,14 @@ jobs:
         env:
           PUBLIC_GHL_FORM_URL: ${{ secrets.PUBLIC_GHL_FORM_URL }}
           PUBLIC_GHL_CALENDAR_URL: ${{ secrets.PUBLIC_GHL_CALENDAR_URL }}
-      - uses: actions/upload-pages-artifact@v3
+      # Direct Upload — does NOT count against Cloudflare's 500-builds/month
+      # cap, since that only applies to Cloudflare's own Git-integration
+      # builds. Our own build step above is the build; this just ships the
+      # already-built dist/ folder.
+      - uses: cloudflare/pages-action@v1
         with:
-          path: dist/
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/deploy-pages@v4
-        id: deployment
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Update this if the Cloudflare Pages project is named differently.
+          projectName: naprey
+          directory: dist
