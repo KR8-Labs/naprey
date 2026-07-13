@@ -1,13 +1,13 @@
 // POST /api/save-content — the only place GITHUB_PAT is ever used. Reads the
 // current file's sha, then commits the edited JSON straight to `main`, which
 // the existing GitHub Actions workflow picks up and deploys.
-import { verifyAccessJwt, utf8ToBase64, type FunctionContext } from './_shared';
+import { verifySession, utf8ToBase64, type FunctionContext } from './_shared';
 
 const FILE_PATH = 'src/data/content.json';
 
 export const onRequestPost = async ({ request, env }: FunctionContext): Promise<Response> => {
-  const accessError = await verifyAccessJwt(request, env);
-  if (accessError) return accessError;
+  const authError = await verifySession(request, env);
+  if (authError) return authError;
 
   let body: unknown;
   try {

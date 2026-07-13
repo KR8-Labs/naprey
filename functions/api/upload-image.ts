@@ -1,8 +1,8 @@
 // POST /api/upload-image — receives a (client-resized) image file and writes
 // it straight to the R2 bucket via its binding. No signing step needed here,
 // unlike a third-party signed-upload flow — the binding itself is the trust
-// boundary, and it's only reachable by a verified Access request.
-import { verifyAccessJwt, type FunctionContext } from './_shared';
+// boundary, and it's only reachable by a request carrying a valid session.
+import { verifySession, type FunctionContext } from './_shared';
 
 const MAX_BYTES = 8 * 1024 * 1024; // 8MB — generous given the client resizes before upload
 
@@ -13,8 +13,8 @@ function extensionFor(mimeType: string): string {
 }
 
 export const onRequestPost = async ({ request, env }: FunctionContext): Promise<Response> => {
-  const accessError = await verifyAccessJwt(request, env);
-  if (accessError) return accessError;
+  const authError = await verifySession(request, env);
+  if (authError) return authError;
 
   if (!env.IMAGES_BUCKET || !env.R2_PUBLIC_BASE_URL) {
     return new Response('Image storage is not configured on the server.', { status: 500 });

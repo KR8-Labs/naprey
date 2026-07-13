@@ -11,24 +11,24 @@
 # R2 uploads still genuinely work (Wrangler emulates the bucket locally) —
 # only the GitHub read/write side is mocked. Good enough to exercise the
 # whole admin UI end to end with no GitHub setup at all.
-LOCAL_DEV_BYPASS_ACCESS=true
+LOCAL_DEV_BYPASS_AUTH=true
 LOCAL_DEV_SAMPLE_CONTENT=true
 
 # ── Option B: real GitHub round-trip against a scratch repo ──
 # Only needed if you want to test the ACTUAL commit flow. Point these at a
-# disposable throwaway repo — NOT the real ygglue/naprey — since
+# disposable throwaway repo — NOT the real KR8-Labs/naprey — since
 # save-content.ts will really commit to whatever repo you put here. Only the
-# real Cloudflare Pages project should ever point at ygglue/naprey. Leave
+# real Cloudflare Pages project should ever point at KR8-Labs/naprey. Leave
 # LOCAL_DEV_SAMPLE_CONTENT unset (or 'false') to use this path instead.
 # GITHUB_OWNER=your-github-username
 # GITHUB_REPO=your-scratch-test-repo
 # GITHUB_PAT=github_pat_REPLACE_WITH_A_TOKEN_SCOPED_TO_THE_SCRATCH_REPO_ONLY
 
-# ── Optional: exercise real Access JWT verification locally ──
-# Only needed if you want to test verifyAccessJwt itself rather than using
-# the LOCAL_DEV_BYPASS_ACCESS shortcut above.
-# ACCESS_TEAM_DOMAIN=yourteam.cloudflareaccess.com
-# ACCESS_AUD=your-access-application-aud-tag
+# ── Optional: exercise the real login flow locally ──
+# Only needed if you want to test the password + session cookie path itself
+# rather than using the LOCAL_DEV_BYPASS_AUTH shortcut above.
+# ADMIN_PASSWORD=pick-a-local-test-password
+# SESSION_SECRET=any-random-string-for-local-testing
 
 # The R2 binding (see wrangler.toml) is emulated locally regardless of this
 # value — it's only used to build the "public URL" returned after an upload,

@@ -1,6 +1,7 @@
 // GET /api/content — proxies the live content.json from GitHub. Reading it
 // isn't sensitive (it's the same data the public site already shows), so this
-// endpoint needs no auth beyond Cloudflare Access already gating /admin/*.
+// endpoint needs no auth beyond the login gate already covering /admin/*
+// (functions/admin/_middleware.ts).
 import type { FunctionContext } from './_shared';
 // Local-dev-only sample data — bundled at build time, only ever read when
 // LOCAL_DEV_SAMPLE_CONTENT is set (see the Env interface in _shared.ts).
